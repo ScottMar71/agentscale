@@ -6,23 +6,27 @@ import {
   type ConnectionStatus,
 } from "@/lib/connections";
 import { CheckCircle2, AlertCircle, Circle } from "lucide-react";
+import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 const statusStyles: Record<
   ConnectionStatus,
-  { badge: string; icon: typeof CheckCircle2 }
+  { badge: string; icon: typeof CheckCircle2; iconColor: string }
 > = {
   connected: {
-    badge: "bg-emerald-50 text-emerald-700",
+    badge: "bg-success-subtle text-success",
     icon: CheckCircle2,
+    iconColor: "text-success",
   },
   partial: {
-    badge: "bg-amber-50 text-amber-700",
+    badge: "bg-warning-subtle text-warning",
     icon: AlertCircle,
+    iconColor: "text-warning",
   },
   not_configured: {
-    badge: "bg-slate-100 text-slate-600",
+    badge: "bg-muted text-muted-foreground",
     icon: Circle,
+    iconColor: "text-muted-foreground/60",
   },
 };
 
@@ -33,14 +37,14 @@ export function ConnectionStatusPanel() {
   return (
     <div className="space-y-4">
       {demo && (
-        <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
-          <strong>Demo mode</strong> — dashboard uses sample data until Supabase keys
+        <div className="rounded-lg border border-warning/30 bg-warning-subtle px-4 py-3 text-sm text-warning">
+          <strong>Demo mode</strong> — the dashboard uses sample data until Supabase keys
           are set. Run{" "}
-          <code className="rounded bg-amber-100 px-1">vercel env pull .env.local</code>{" "}
+          <code className="rounded bg-warning/15 px-1 font-mono">vercel env pull .env.local</code>{" "}
           after connecting integrations.
         </div>
       )}
-      <Card className="border-slate-200">
+      <Card>
         <CardHeader>
           <CardTitle>Connected services</CardTitle>
         </CardHeader>
@@ -51,34 +55,26 @@ export function ConnectionStatusPanel() {
             return (
               <div
                 key={svc.id}
-                className="flex items-start justify-between gap-4 border-b border-slate-100 pb-4 last:border-0 last:pb-0"
+                className="flex items-start justify-between gap-4 border-b border-border pb-4 last:border-0 last:pb-0"
               >
                 <div className="flex gap-3">
-                  <Icon
-                    className={`h-5 w-5 shrink-0 mt-0.5 ${
-                      svc.status === "connected"
-                        ? "text-emerald-600"
-                        : svc.status === "partial"
-                          ? "text-amber-600"
-                          : "text-slate-400"
-                    }`}
-                  />
+                  <Icon className={cn("mt-0.5 h-5 w-5 shrink-0", style.iconColor)} aria-hidden />
                   <div>
-                    <p className="font-medium text-[#0B1426]">{svc.name}</p>
-                    <p className="text-sm text-slate-500 mt-0.5">{svc.detail}</p>
+                    <p className="font-medium text-foreground">{svc.name}</p>
+                    <p className="mt-0.5 text-sm text-muted-foreground">{svc.detail}</p>
                     {svc.docsUrl && (
                       <Link
                         href={svc.docsUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-xs text-[#2563EB] hover:underline mt-1 inline-block"
+                        className="mt-1 inline-block text-xs text-primary hover:underline"
                       >
                         Open dashboard →
                       </Link>
                     )}
                   </div>
                 </div>
-                <Badge className={style.badge}>{svc.status.replace("_", " ")}</Badge>
+                <Badge className={cn("capitalize", style.badge)}>{svc.status.replace("_", " ")}</Badge>
               </div>
             );
           })}

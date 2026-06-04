@@ -4,41 +4,192 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/*
+ * AgentScale design system
+ * ------------------------
+ * Brand: midnight navy + electric blue, with a cyan signal accent.
+ * Neutrals are a single slate-based scale. Status colours are tokenised so
+ * components never hardcode emerald/amber/red. No ad-hoc hex in components.
+ */
 :root {
+  /* Neutral surfaces */
   --background: #ffffff;
   --foreground: #0b1426;
   --card: #ffffff;
   --card-foreground: #0b1426;
+  --popover: #ffffff;
+  --popover-foreground: #0b1426;
+  --muted: #f4f6f8;
+  --muted-foreground: #64748b;
+  --accent: #eef2f7;
+  --accent-foreground: #0b1426;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+
+  /* Brand */
   --primary: #2563eb;
   --primary-foreground: #ffffff;
   --secondary: #f4f6f8;
   --secondary-foreground: #1e3a5f;
-  --muted: #f4f6f8;
-  --muted-foreground: #64748b;
-  --accent: #f4f6f8;
-  --accent-foreground: #0b1426;
-  --destructive: #dc2626;
-  --border: #e2e8f0;
-  --input: #e2e8f0;
   --ring: #2563eb;
-  --radius: 0.5rem;
-  --agentscale-navy: #0b1426;
-  --agentscale-blue: #1e3a5f;
-  --agentscale-electric: #2563eb;
+
+  --brand: #0b1426;
+  --brand-foreground: #ffffff;
+  --brand-muted: #1e3a5f;
+  --brand-accent: #06b6d4;
+  --brand-accent-foreground: #ffffff;
+
+  /* Status */
+  --success: #059669;
+  --success-foreground: #ffffff;
+  --success-subtle: #ecfdf5;
+  --warning: #d97706;
+  --warning-foreground: #ffffff;
+  --warning-subtle: #fffbeb;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --destructive-subtle: #fef2f2;
+  --info: #2563eb;
+  --info-foreground: #ffffff;
+  --info-subtle: #eff6ff;
+
+  /* Charts */
+  --chart-1: #2563eb;
+  --chart-2: #06b6d4;
+  --chart-3: #8b5cf6;
+  --chart-4: #f59e0b;
+  --chart-5: #10b981;
+
+  /* Radius scale (4px base) */
+  --radius: 0.625rem;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Elevation */
+  --shadow-xs: 0 1px 2px 0 rgb(11 20 38 / 0.04);
+  --shadow-sm: 0 1px 3px 0 rgb(11 20 38 / 0.06), 0 1px 2px -1px rgb(11 20 38 / 0.06);
+  --shadow-md: 0 4px 12px -2px rgb(11 20 38 / 0.08), 0 2px 6px -2px rgb(11 20 38 / 0.06);
+  --shadow-lg: 0 12px 32px -8px rgb(11 20 38 / 0.14);
+}
+
+.dark {
+  --background: #0a0f1c;
+  --foreground: #e8edf5;
+  --card: #0f1729;
+  --card-foreground: #e8edf5;
+  --popover: #0f1729;
+  --popover-foreground: #e8edf5;
+  --muted: #16213a;
+  --muted-foreground: #93a4bf;
+  --accent: #1b2742;
+  --accent-foreground: #e8edf5;
+  --border: #1f2c47;
+  --input: #243149;
+
+  --primary: #3b82f6;
+  --primary-foreground: #0a0f1c;
+  --secondary: #16213a;
+  --secondary-foreground: #cdd8ec;
+  --ring: #3b82f6;
+
+  --brand: #0f1729;
+  --brand-foreground: #e8edf5;
+  --brand-muted: #93a4bf;
+  --brand-accent: #22d3ee;
+  --brand-accent-foreground: #0a0f1c;
+
+  --success: #10b981;
+  --success-subtle: #052e22;
+  --warning: #f59e0b;
+  --warning-subtle: #2a1d05;
+  --destructive: #f87171;
+  --destructive-foreground: #0a0f1c;
+  --destructive-subtle: #2a0e0e;
+  --info: #3b82f6;
+  --info-subtle: #0c1f3d;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-  --color-agentscale-navy: var(--agentscale-navy);
-  --color-agentscale-electric: var(--agentscale-electric);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-ring: var(--ring);
+
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-brand-muted: var(--brand-muted);
+  --color-brand-accent: var(--brand-accent);
+  --color-brand-accent-foreground: var(--brand-accent-foreground);
+
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-success-subtle: var(--success-subtle);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-warning-subtle: var(--warning-subtle);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-destructive-subtle: var(--destructive-subtle);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-info-subtle: var(--info-subtle);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-display), var(--font-body), ui-sans-serif, sans-serif;
+  --font-mono: var(--font-mono-code), ui-monospace, monospace;
+
+  --shadow-xs: var(--shadow-xs);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+}
+
+* {
+  border-color: var(--border);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: "cv11", "ss01";
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-display), var(--font-body), ui-sans-serif, sans-serif;
+  letter-spacing: -0.018em;
+}
+
+::selection {
+  background: color-mix(in oklch, var(--primary) 22%, transparent);
 }

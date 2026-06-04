@@ -24,17 +24,17 @@ export default async function AgentDetailPage({
   return (
     <>
       <DashboardHeader title={agent.name} description={agent.description ?? undefined} />
-      <div className="flex-1 overflow-y-auto p-8">
+      <div className="flex-1 overflow-y-auto p-4 sm:p-8">
         <Link
           href="/dashboard/agents"
           className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "mb-4 -ml-2 inline-flex")}
         >
-          <ArrowLeft className="mr-2 h-4 w-4" />
+          <ArrowLeft className="h-4 w-4" aria-hidden />
           Back to registry
         </Link>
 
         <div className="grid gap-6 lg:grid-cols-3">
-          <Card className="lg:col-span-2 border-slate-200">
+          <Card className="lg:col-span-2">
             <CardHeader>
               <CardTitle>Agent profile</CardTitle>
             </CardHeader>
@@ -48,19 +48,19 @@ export default async function AgentDetailPage({
                 <TabsContent value="overview" className="mt-4 space-y-4">
                   <dl className="grid grid-cols-2 gap-4 text-sm">
                     <div>
-                      <dt className="text-slate-500">Department</dt>
+                      <dt className="text-muted-foreground">Department</dt>
                       <dd className="font-medium">{agent.department}</dd>
                     </div>
                     <div>
-                      <dt className="text-slate-500">Owner</dt>
+                      <dt className="text-muted-foreground">Owner</dt>
                       <dd className="font-medium">{agent.owner_name}</dd>
                     </div>
                     <div>
-                      <dt className="text-slate-500">Business function</dt>
+                      <dt className="text-muted-foreground">Business function</dt>
                       <dd className="font-medium">{agent.business_function}</dd>
                     </div>
                     <div>
-                      <dt className="text-slate-500">Deployment</dt>
+                      <dt className="text-muted-foreground">Deployment</dt>
                       <dd className="font-medium capitalize">{agent.deployment_status}</dd>
                     </div>
                   </dl>
@@ -74,24 +74,24 @@ export default async function AgentDetailPage({
                 </TabsContent>
                 <TabsContent value="config" className="mt-4 space-y-3 text-sm">
                   <p>
-                    <span className="text-slate-500">Model:</span>{" "}
+                    <span className="text-muted-foreground">Model:</span>{" "}
                     {agent.model_provider} {agent.model_version}
                   </p>
                   <p>
-                    <span className="text-slate-500">Prompt version:</span> v
+                    <span className="text-muted-foreground">Prompt version:</span> v
                     {agent.prompt_version}
                   </p>
                   <p>
-                    <span className="text-slate-500">Tools:</span>{" "}
+                    <span className="text-muted-foreground">Tools:</span>{" "}
                     {agent.tool_stack.join(", ")}
                   </p>
                   <p>
-                    <span className="text-slate-500">Knowledge base:</span>{" "}
+                    <span className="text-muted-foreground">Knowledge base:</span>{" "}
                     {agent.knowledge_base_connected ? "Connected" : "Not connected"}
                   </p>
                 </TabsContent>
                 <TabsContent value="training" className="mt-4">
-                  <p className="text-sm text-slate-600">
+                  <p className="text-sm text-muted-foreground">
                     Assign training programmes from the Training Academy.
                   </p>
                   <Link
@@ -106,26 +106,26 @@ export default async function AgentDetailPage({
           </Card>
 
           <div className="space-y-4">
-            <Card className="border-slate-200">
+            <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm">Health score</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-4xl font-semibold text-[#0B1426]">{agent.health_score}</p>
+                <p className="font-heading text-4xl font-semibold text-foreground">{agent.health_score}</p>
                 <Progress value={agent.health_score} className="mt-3" />
               </CardContent>
             </Card>
-            <Card className="border-slate-200">
+            <Card>
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm">Certification</CardTitle>
               </CardHeader>
               <CardContent>
                 <Badge className="capitalize">{agent.certification_status}</Badge>
-                <p className="mt-2 text-xs text-slate-500">Risk: {agent.risk_level}</p>
+                <p className="mt-2 text-xs text-muted-foreground">Risk: {agent.risk_level}</p>
               </CardContent>
             </Card>
             {versions.length > 0 && (
-              <Card className="border-slate-200">
+              <Card>
                 <CardHeader className="pb-2">
                   <CardTitle className="text-sm">Versions</CardTitle>
                 </CardHeader>

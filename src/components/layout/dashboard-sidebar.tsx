@@ -16,7 +16,7 @@ import {
   Settings,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { APP_NAME } from "@/lib/constants";
+import { Logo } from "@/components/brand/logo";
 
 const iconMap = {
   LayoutDashboard,
@@ -44,54 +44,72 @@ const links = [
   { href: "/dashboard/incidents", label: "Improvement", icon: "RefreshCw" as const },
 ];
 
-export function DashboardSidebar() {
+/** Shared nav body used by both the desktop sidebar and the mobile sheet. */
+export function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname();
 
   return (
-    <aside className="flex h-full w-64 flex-col border-r border-slate-200 bg-[#0B1426] text-white">
+    <nav
+      aria-label="Primary"
+      className="flex h-full flex-col bg-brand text-brand-foreground"
+    >
       <div className="border-b border-white/10 px-5 py-5">
-        <Link href="/dashboard" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#2563EB] text-sm font-bold">
-            AS
-          </div>
-          <div>
-            <p className="text-sm font-semibold tracking-tight">{APP_NAME}</p>
-            <p className="text-[10px] text-slate-400">AI Workforce Platform</p>
-          </div>
+        <Link
+          href="/dashboard"
+          onClick={onNavigate}
+          className="block rounded-md outline-none focus-visible:ring-2 focus-visible:ring-brand-accent"
+        >
+          <Logo
+            subtitle="AI Workforce Platform"
+            wordmarkClassName="text-brand-foreground"
+          />
         </Link>
       </div>
-      <nav className="flex-1 space-y-0.5 overflow-y-auto px-3 py-4">
+      <ul className="flex-1 space-y-0.5 overflow-y-auto px-3 py-4">
         {links.map((link) => {
           const Icon = iconMap[link.icon];
           const active =
             pathname === link.href ||
             (link.href !== "/dashboard" && pathname.startsWith(link.href));
           return (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={cn(
-                "flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors",
-                active
-                  ? "bg-[#2563EB] text-white"
-                  : "text-slate-300 hover:bg-white/5 hover:text-white"
-              )}
-            >
-              <Icon className="h-4 w-4 shrink-0" />
-              {link.label}
-            </Link>
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                onClick={onNavigate}
+                aria-current={active ? "page" : undefined}
+                className={cn(
+                  "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium outline-none transition-colors duration-200",
+                  "focus-visible:ring-2 focus-visible:ring-brand-accent",
+                  active
+                    ? "bg-primary text-primary-foreground shadow-sm"
+                    : "text-brand-foreground/70 hover:bg-white/5 hover:text-brand-foreground"
+                )}
+              >
+                <Icon className="h-4 w-4 shrink-0" aria-hidden />
+                {link.label}
+              </Link>
+            </li>
           );
         })}
-      </nav>
+      </ul>
       <div className="border-t border-white/10 px-3 py-4">
         <Link
           href="/dashboard/settings"
-          className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-slate-300 hover:bg-white/5 hover:text-white"
+          onClick={onNavigate}
+          className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-brand-foreground/70 outline-none transition-colors duration-200 hover:bg-white/5 hover:text-brand-foreground focus-visible:ring-2 focus-visible:ring-brand-accent"
         >
-          <Settings className="h-4 w-4" />
+          <Settings className="h-4 w-4" aria-hidden />
           Settings
         </Link>
       </div>
+    </nav>
+  );
+}
+
+export function DashboardSidebar() {
+  return (
+    <aside className="hidden h-full w-64 shrink-0 border-r border-border/0 lg:block">
+      <SidebarNav />
     </aside>
   );
 }

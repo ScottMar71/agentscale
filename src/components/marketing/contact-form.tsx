@@ -30,40 +30,58 @@ export function ContactForm() {
   }
 
   return (
-    <Card>
+    <Card className="shadow-sm">
       <CardContent className="pt-6">
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
+        <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+          <div className="space-y-1.5">
             <Label htmlFor="name">Name</Label>
-            <Input id="name" name="name" required className="mt-1" />
+            <Input id="name" name="name" autoComplete="name" required placeholder="Jordan Avery" />
           </div>
-          <div>
+          <div className="space-y-1.5">
             <Label htmlFor="email">Work email</Label>
-            <Input id="email" name="email" type="email" required className="mt-1" />
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              required
+              placeholder="you@company.com"
+            />
           </div>
-          <div>
+          <div className="space-y-1.5">
             <Label htmlFor="company">Company</Label>
-            <Input id="company" name="company" className="mt-1" />
+            <Input id="company" name="company" autoComplete="organization" placeholder="Acme Corp" />
           </div>
-          <div>
-            <Label htmlFor="message">Message</Label>
-            <Input id="message" name="message" className="mt-1" />
+          <div className="space-y-1.5">
+            <Label htmlFor="message">What would you like to see?</Label>
+            <Input id="message" name="message" placeholder="Certifying our support agents…" />
           </div>
           <Button
             type="submit"
-            className="w-full bg-[#2563EB] hover:bg-[#1d4ed8]"
+            size="lg"
+            className="w-full"
             disabled={status === "loading"}
           >
-            {status === "loading" ? "Sending…" : "Request demo"}
+            {status === "loading" ? "Sending…" : "Book a demo"}
           </Button>
           {status === "success" && (
-            <p className="text-sm text-emerald-600 text-center">
-              Thank you — we&apos;ll be in touch shortly.
+            <p
+              role="status"
+              className="text-center text-sm font-medium text-success"
+            >
+              Thanks — we&apos;ll be in touch within one business day.
             </p>
           )}
           {status === "error" && (
-            <p className="text-sm text-red-600 text-center">
-              Something went wrong. Email hello@agentscale.io directly.
+            <p
+              role="alert"
+              className="text-center text-sm font-medium text-destructive"
+            >
+              Something went wrong. Email{" "}
+              <a className="underline" href="mailto:hello@agentscale.io">
+                hello@agentscale.io
+              </a>{" "}
+              directly.
             </p>
           )}
         </form>

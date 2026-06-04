@@ -10,27 +10,27 @@ export default function SettingsPage() {
         title="Settings"
         description="Organisation, billing, integrations, and team access"
       />
-      <div className="flex-1 overflow-y-auto p-8 space-y-6 max-w-3xl">
-        <Card className="border-slate-200">
+      <div className="max-w-3xl flex-1 space-y-6 overflow-y-auto p-4 sm:p-8">
+        <Card>
           <CardHeader>
             <CardTitle>Organisation</CardTitle>
           </CardHeader>
-          <CardContent className="text-sm text-slate-600 space-y-2">
+          <CardContent className="space-y-2 text-sm text-muted-foreground">
             <p>
-              <span className="text-slate-500">Name:</span> Acme Corp (Demo)
+              <span className="text-foreground/60">Name:</span> Acme Corp
             </p>
             <p>
-              <span className="text-slate-500">Plan:</span>{" "}
+              <span className="text-foreground/60">Plan:</span>{" "}
               <Badge>{PLANS.growth.name}</Badge> — up to {PLANS.growth.agents} agents
             </p>
           </CardContent>
         </Card>
         <ConnectionStatusPanel />
-        <Card className="border-slate-200">
+        <Card>
           <CardHeader>
             <CardTitle>Roles</CardTitle>
           </CardHeader>
-          <CardContent className="text-sm text-slate-600">
+          <CardContent className="text-sm text-muted-foreground">
             Super Admin · Organisation Admin · Manager · Viewer
           </CardContent>
         </Card>

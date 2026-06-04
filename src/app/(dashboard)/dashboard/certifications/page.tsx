@@ -2,6 +2,7 @@ import { DashboardHeader } from "@/components/layout/dashboard-header";
 import { demoCertifications, demoAgentCerts } from "@/lib/demo-data";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 import {
   Table,
   TableBody,
@@ -19,21 +20,21 @@ export default function CertificationsPage() {
         title="Certification Engine"
         description="Digital certificates, expiry tracking, and approval workflows"
       />
-      <div className="flex-1 overflow-y-auto p-8 space-y-8">
+      <div className="flex-1 space-y-8 overflow-y-auto p-4 sm:p-8">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
           {demoCertifications.map((c) => (
-            <Card key={c.id} className="border-slate-200">
+            <Card key={c.id} className="transition-shadow duration-200 hover:shadow-md">
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm">{c.name}</CardTitle>
               </CardHeader>
-              <CardContent className="text-xs text-slate-500">
+              <CardContent className="text-xs text-muted-foreground">
                 Valid {c.validity_days} days
               </CardContent>
             </Card>
           ))}
         </div>
 
-        <Card className="border-slate-200">
+        <Card className="overflow-x-auto">
           <CardHeader>
             <CardTitle>Issued certificates</CardTitle>
           </CardHeader>
@@ -56,11 +57,12 @@ export default function CertificationsPage() {
                     <TableCell>{ac.certification_name}</TableCell>
                     <TableCell>
                       <Badge
-                        className={
+                        className={cn(
+                          "capitalize",
                           ac.status === "certified"
-                            ? "bg-blue-50 text-blue-700"
-                            : "bg-red-50 text-red-700"
-                        }
+                            ? "bg-info-subtle text-info"
+                            : "bg-destructive-subtle text-destructive"
+                        )}
                       >
                         {ac.status}
                       </Badge>
@@ -85,9 +87,9 @@ export default function CertificationsPage() {
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200 bg-slate-50">
-          <CardContent className="pt-6 text-sm text-slate-600">
-            <strong>Certification rules:</strong> Complete training → Pass assessments
+        <Card className="bg-muted">
+          <CardContent className="pt-6 text-sm text-muted-foreground">
+            <strong className="text-foreground">Certification rules:</strong> Complete training → Pass assessments
             → Pass scenario tests → Human approval → Digital certificate issued.
           </CardContent>
         </Card>

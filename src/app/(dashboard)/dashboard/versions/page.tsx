@@ -15,30 +15,30 @@ export default function VersionControlPage() {
         title="Agent Version Control"
         description="Prompt, model, and knowledge base version timeline with rollback"
       />
-      <div className="flex-1 overflow-y-auto p-8">
-        <Card className="border-slate-200 max-w-2xl">
+      <div className="flex-1 overflow-y-auto p-4 sm:p-8">
+        <Card className="max-w-2xl">
           <CardHeader>
             <div className="flex items-center gap-2">
-              <GitBranch className="h-5 w-5 text-[#2563EB]" />
+              <GitBranch className="h-5 w-5 text-primary" aria-hidden />
               <CardTitle>{agent?.name ?? "Agent"} — Version timeline</CardTitle>
             </div>
           </CardHeader>
           <CardContent>
-            <ul className="relative border-l border-slate-200 ml-3 space-y-8 pl-8">
+            <ul className="relative ml-3 space-y-8 border-l border-border pl-8">
               {versions.map((v) => (
                 <li key={v.id} className="relative">
-                  <span className="absolute -left-[2.4rem] flex h-4 w-4 items-center justify-center rounded-full bg-white border-2 border-[#2563EB]" />
+                  <span className="absolute -left-[2.4rem] flex h-4 w-4 items-center justify-center rounded-full border-2 border-primary bg-card" />
                   <div className="flex flex-wrap items-center justify-between gap-2">
                     <div>
-                      <p className="font-semibold text-[#0B1426]">v{v.version_label}</p>
-                      <p className="text-xs text-slate-500">
+                      <p className="font-heading font-semibold text-foreground">v{v.version_label}</p>
+                      <p className="text-xs text-muted-foreground">
                         {v.model_provider} ·{" "}
                         {new Date(v.created_at).toLocaleDateString()}
                       </p>
                     </div>
                     <div className="flex items-center gap-2">
                       {v.is_current ? (
-                        <Badge className="bg-[#2563EB] text-white">Current</Badge>
+                        <Badge>Current</Badge>
                       ) : (
                         <Button variant="outline" size="sm">
                           Rollback

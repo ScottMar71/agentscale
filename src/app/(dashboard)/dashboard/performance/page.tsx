@@ -24,24 +24,24 @@ export default function PerformancePage() {
         title="Performance Management"
         description="AI agent scorecards, health scores, and operational KPIs"
       />
-      <div className="flex-1 overflow-y-auto p-8 space-y-8">
-        <div className="grid gap-4 md:grid-cols-4">
+      <div className="flex-1 space-y-8 overflow-y-auto p-4 sm:p-8">
+        <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4">
           {[
             { label: "Avg accuracy", value: "91%" },
             { label: "Success rate", value: "87%" },
             { label: "Avg cost/task", value: "£0.04" },
             { label: "Avg response", value: "1.2s" },
           ].map((m) => (
-            <Card key={m.label} className="border-slate-200">
+            <Card key={m.label} className="transition-shadow duration-200 hover:shadow-md">
               <CardContent className="pt-6">
-                <p className="text-xs text-slate-500">{m.label}</p>
-                <p className="text-2xl font-semibold text-[#0B1426]">{m.value}</p>
+                <p className="text-xs text-muted-foreground">{m.label}</p>
+                <p className="font-heading text-2xl font-semibold text-foreground">{m.value}</p>
               </CardContent>
             </Card>
           ))}
         </div>
 
-        <Card className="border-slate-200">
+        <Card className="overflow-x-auto">
           <CardHeader>
             <CardTitle>Agent scorecards</CardTitle>
           </CardHeader>

@@ -12,24 +12,24 @@ export default function OnboardingPage() {
         title="Agent Onboarding"
         description="Track onboarding checklists until agents are production-ready"
       />
-      <div className="flex-1 overflow-y-auto p-8 space-y-6">
+      <div className="flex-1 space-y-6 overflow-y-auto p-4 sm:p-8">
         {demoOnboarding.map((record) => (
-          <Card key={record.agent_id} className="border-slate-200">
+          <Card key={record.agent_id}>
             <CardHeader className="flex flex-row items-center justify-between">
               <div>
                 <CardTitle className="text-lg">
                   <Link
                     href={`/dashboard/agents/${record.agent_id}`}
-                    className="hover:text-[#2563EB]"
+                    className="rounded outline-none transition-colors hover:text-primary focus-visible:ring-2 focus-visible:ring-ring"
                   >
                     {record.agent_name}
                   </Link>
                 </CardTitle>
-                <p className="text-sm text-slate-500 mt-1">
+                <p className="mt-1 text-sm text-muted-foreground">
                   {record.progress_percent}% complete
                 </p>
               </div>
-              <span className="text-2xl font-semibold text-[#2563EB]">
+              <span className="font-heading text-2xl font-semibold text-primary">
                 {record.progress_percent}%
               </span>
             </CardHeader>
@@ -39,12 +39,12 @@ export default function OnboardingPage() {
                 {record.checklist.map((item) => (
                   <li
                     key={item.key}
-                    className="flex items-center gap-2 text-sm text-slate-700"
+                    className="flex items-center gap-2 text-sm text-foreground"
                   >
                     {item.completed ? (
-                      <Check className="h-4 w-4 text-emerald-600 shrink-0" />
+                      <Check className="h-4 w-4 shrink-0 text-success" aria-hidden />
                     ) : (
-                      <Circle className="h-4 w-4 text-slate-300 shrink-0" />
+                      <Circle className="h-4 w-4 shrink-0 text-muted-foreground/40" aria-hidden />
                     )}
                     {item.label}
                   </li>

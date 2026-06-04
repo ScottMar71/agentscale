@@ -22,7 +22,7 @@ export default function ExecutiveDashboardPage() {
         description="AI workforce health, certification coverage, and risk exposure"
         badge="Live"
       />
-      <div className="flex-1 overflow-y-auto p-8 space-y-8">
+      <div className="flex-1 space-y-8 overflow-y-auto p-4 sm:p-8">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
           <StatCard title="AI Workforce" value={s.totalAgents} subtitle="Registered agents" icon={Bot} />
           <StatCard
@@ -52,30 +52,30 @@ export default function ExecutiveDashboardPage() {
         <ExecutiveCharts />
 
         <div className="grid gap-4 md:grid-cols-4">
-          <Card className="border-amber-200 bg-amber-50/50">
+          <Card className="bg-warning-subtle">
             <CardContent className="flex items-center gap-3 pt-6">
-              <Award className="h-8 w-8 text-amber-600" />
+              <Award className="h-8 w-8 shrink-0 text-warning" aria-hidden />
               <div>
-                <p className="text-2xl font-semibold text-[#0B1426]">{s.expiringCerts}</p>
-                <p className="text-xs text-slate-600">Expiring certifications (30d)</p>
+                <p className="font-heading text-2xl font-semibold text-foreground">{s.expiringCerts}</p>
+                <p className="text-xs text-muted-foreground">Expiring certifications (30d)</p>
               </div>
             </CardContent>
           </Card>
-          <Card className="border-red-200 bg-red-50/50">
+          <Card className="bg-destructive-subtle">
             <CardContent className="flex items-center gap-3 pt-6">
-              <AlertTriangle className="h-8 w-8 text-red-600" />
+              <AlertTriangle className="h-8 w-8 shrink-0 text-destructive" aria-hidden />
               <div>
-                <p className="text-2xl font-semibold text-[#0B1426]">{s.failedAssessments}</p>
-                <p className="text-xs text-slate-600">Failed assessments (7d)</p>
+                <p className="font-heading text-2xl font-semibold text-foreground">{s.failedAssessments}</p>
+                <p className="text-xs text-muted-foreground">Failed assessments (7d)</p>
               </div>
             </CardContent>
           </Card>
-          <Card className="border-slate-200 col-span-2">
+          <Card className="col-span-1 md:col-span-2">
             <CardContent className="flex items-center gap-3 pt-6">
-              <Shield className="h-8 w-8 text-[#2563EB]" />
+              <Shield className="h-8 w-8 shrink-0 text-primary" aria-hidden />
               <div>
-                <p className="font-medium text-[#0B1426]">Governance posture: Strong</p>
-                <p className="text-xs text-slate-600 mt-1">
+                <p className="font-medium text-foreground">Governance posture: Strong</p>
+                <p className="mt-1 text-xs text-muted-foreground">
                   81% certification coverage · 4 agents require immediate review
                 </p>
               </div>

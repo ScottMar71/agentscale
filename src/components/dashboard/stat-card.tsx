@@ -11,6 +11,12 @@ interface StatCardProps {
   variant?: "default" | "warning" | "success";
 }
 
+const iconStyles: Record<NonNullable<StatCardProps["variant"]>, string> = {
+  default: "bg-info-subtle text-info",
+  warning: "bg-warning-subtle text-warning",
+  success: "bg-success-subtle text-success",
+};
+
 export function StatCard({
   title,
   value,
@@ -19,27 +25,35 @@ export function StatCard({
   trend,
   variant = "default",
 }: StatCardProps) {
-  const borderClass =
-    variant === "warning"
-      ? "border-amber-200"
-      : variant === "success"
-        ? "border-emerald-200"
-        : "border-slate-200";
-
   return (
-    <Card className={cn("border", borderClass)}>
+    <Card className="transition-shadow duration-200 hover:shadow-md">
       <CardHeader className="flex flex-row items-center justify-between pb-2">
-        <CardTitle className="text-sm font-medium text-slate-500">{title}</CardTitle>
-        {Icon && <Icon className="h-4 w-4 text-slate-400" />}
+        <CardTitle className="text-sm font-medium text-muted-foreground">
+          {title}
+        </CardTitle>
+        {Icon && (
+          <span
+            className={cn(
+              "flex size-8 items-center justify-center rounded-lg",
+              iconStyles[variant]
+            )}
+          >
+            <Icon className="h-4 w-4" aria-hidden />
+          </span>
+        )}
       </CardHeader>
       <CardContent>
-        <p className="text-2xl font-semibold text-[#0B1426]">{value}</p>
-        {subtitle && <p className="mt-1 text-xs text-slate-500">{subtitle}</p>}
+        <p className="font-heading text-2xl font-semibold tracking-tight text-foreground">
+          {value}
+        </p>
+        {subtitle && (
+          <p className="mt-1 text-xs text-muted-foreground">{subtitle}</p>
+        )}
         {trend && (
           <p
             className={cn(
               "mt-1 text-xs font-medium",
-              trend.positive ? "text-emerald-600" : "text-red-600"
+              trend.positive ? "text-success" : "text-destructive"
             )}
           >
             {trend.value}
