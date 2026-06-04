@@ -110,3 +110,4 @@ Use the **Linear** Cursor plugin in chat for ad-hoc issue updates (OAuth).
 ## License
 
 Proprietary — AgentScale © 2026
+# agentscale
