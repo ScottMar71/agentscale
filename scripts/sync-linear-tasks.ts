@@ -10,7 +10,7 @@ import {
 } from "../src/lib/linear/client";
 import { AGENTSCALE_LINEAR_TASKS } from "../src/lib/linear/tasks";
 
-function parseEnvFile(path: string) {
+function loadEnvFile(path: string, override: boolean) {
   if (!existsSync(path)) return;
 
   for (const line of readFileSync(path, "utf8").split("\n")) {
@@ -26,14 +26,15 @@ function parseEnvFile(path: string) {
     ) {
       value = value.slice(1, -1);
     }
-    if (!process.env[key]) process.env[key] = value;
+    if (!override && process.env[key]) continue;
+    process.env[key] = value;
   }
 }
 
 /** Global ~/.cursor/linear.env, then project .env.local (project wins). */
 function loadLinearEnv() {
-  parseEnvFile(join(homedir(), ".cursor", "linear.env"));
-  parseEnvFile(join(process.cwd(), ".env.local"));
+  loadEnvFile(join(homedir(), ".cursor", "linear.env"), false);
+  loadEnvFile(join(process.cwd(), ".env.local"), true);
 }
 
 async function main() {
