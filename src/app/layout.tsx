@@ -1,26 +1,11 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { APP_NAME, APP_TAGLINE } from "@/lib/constants";
 
-const fontDisplay = Space_Grotesk({
-  variable: "--font-display",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["500", "600", "700"],
-  display: "swap",
-});
-
-const fontBody = IBM_Plex_Sans({
-  variable: "--font-body",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  display: "swap",
-});
-
-const fontMono = IBM_Plex_Mono({
-  variable: "--font-mono-code",
-  subsets: ["latin"],
-  weight: ["400", "500"],
   display: "swap",
 });
 
@@ -41,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${fontDisplay.variable} ${fontBody.variable} ${fontMono.variable} antialiased`}
+        className={`${inter.variable} antialiased`}
       >
         {children}
       </body>
