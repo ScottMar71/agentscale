@@ -15,7 +15,7 @@
 8. Wire filters to URL search params
 9. Audit log write on agent create/update
 
-### Sprint 3 — Onboarding & Academy
+### Sprint 3 — Onboarding & Academy ✅
 10. CRUD `training_programs` / `training_modules`
 11. `agent_onboarding` progress API
 12. Module content upload → Supabase Storage

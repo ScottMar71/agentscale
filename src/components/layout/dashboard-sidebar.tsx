@@ -17,6 +17,8 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/brand/logo";
+import { OrgSwitcher } from "@/components/layout/org-switcher";
+import type { UserOrganization } from "@/lib/auth/session";
 
 const iconMap = {
   LayoutDashboard,
@@ -45,7 +47,15 @@ const links = [
 ];
 
 /** Shared nav body used by both the desktop sidebar and the mobile sheet. */
-export function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
+export function SidebarNav({
+  onNavigate,
+  organizations = [],
+  currentOrgId,
+}: {
+  onNavigate?: () => void;
+  organizations?: UserOrganization[];
+  currentOrgId?: string;
+}) {
   const pathname = usePathname();
 
   return (
@@ -64,6 +74,11 @@ export function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
             wordmarkClassName="text-brand-foreground"
           />
         </Link>
+        {organizations.length > 0 && currentOrgId && (
+          <div className="mt-3 px-1">
+            <OrgSwitcher organizations={organizations} currentOrgId={currentOrgId} />
+          </div>
+        )}
       </div>
       <ul className="flex-1 space-y-0.5 overflow-y-auto px-3 py-4">
         {links.map((link) => {
@@ -106,10 +121,19 @@ export function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
   );
 }
 
-export function DashboardSidebar() {
+export function DashboardSidebar({
+  organizations = [],
+  currentOrgId,
+}: {
+  organizations?: UserOrganization[];
+  currentOrgId?: string;
+}) {
   return (
     <aside className="hidden h-full w-64 shrink-0 border-r border-border/0 lg:block">
-      <SidebarNav />
+      <SidebarNav
+        organizations={organizations}
+        currentOrgId={currentOrgId}
+      />
     </aside>
   );
 }

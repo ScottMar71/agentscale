@@ -9,15 +9,16 @@ Ship a **demo-ready, pilot-capable** platform: registry, onboarding, academy, sc
 - [x] Next.js app scaffold + design system
 - [x] Supabase schema + RLS migration
 - [x] Landing page + contact API
-- [ ] Supabase Auth (email + OAuth)
-- [ ] Org creation + invite flow
-- [ ] Replace demo data with live Supabase queries
+- [x] Supabase Auth (email/password + magic link)
+- [x] Org creation on first sign-up (`/setup` + `create_organization` RPC)
+- [ ] Org invite flow
+- [ ] Replace demo data with live Supabase queries (agents, onboarding, academy done; scenarios/certs pending)
 
 ## Phase 2 — Core Modules (Weeks 3–5)
 
-- [ ] Agent Registry CRUD + search/filters
-- [ ] Onboarding checklist (read/write progress)
-- [ ] Training programmes + modules CRUD
+- [x] Agent Registry CRUD + search/filters (URL params + Supabase with demo fallback)
+- [x] Onboarding checklist (read/write progress, toggle items)
+- [x] Training programmes + modules CRUD + storage upload + assign to agent
 - [ ] Scenario library + run history
 - [ ] OpenAI evaluation wired to DB
 - [ ] Certification issue + expiry jobs

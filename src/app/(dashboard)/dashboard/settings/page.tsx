@@ -3,7 +3,15 @@ import { ConnectionStatusPanel } from "@/components/settings/connection-status";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PLANS } from "@/lib/constants";
 import { Badge } from "@/components/ui/badge";
-export default function SettingsPage() {
+import { Button } from "@/components/ui/button";
+import { signOut } from "@/app/actions/auth";
+import { getCurrentOrganization, getAuthUser } from "@/lib/auth/session";
+import { isAuthEnabled } from "@/lib/auth/config";
+
+export default async function SettingsPage() {
+  const authOn = isAuthEnabled();
+  const user = authOn ? await getAuthUser() : null;
+  const org = authOn ? await getCurrentOrganization() : null;
   return (
     <>
       <DashboardHeader
@@ -17,14 +25,27 @@ export default function SettingsPage() {
           </CardHeader>
           <CardContent className="space-y-2 text-sm text-muted-foreground">
             <p>
-              <span className="text-foreground/60">Name:</span> Acme Corp
+              <span className="text-foreground/60">Name:</span>{" "}
+              {org?.name ?? "Acme Corp (demo)"}
             </p>
             <p>
               <span className="text-foreground/60">Plan:</span>{" "}
               <Badge>{PLANS.growth.name}</Badge> — up to {PLANS.growth.agents} agents
             </p>
+            {user && (
+              <p>
+                <span className="text-foreground/60">Signed in as:</span> {user.email}
+              </p>
+            )}
           </CardContent>
         </Card>
+        {authOn && user && (
+          <form action={signOut}>
+            <Button type="submit" variant="outline">
+              Sign out
+            </Button>
+          </form>
+        )}
         <ConnectionStatusPanel />
         <Card>
           <CardHeader>

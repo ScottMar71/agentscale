@@ -30,11 +30,42 @@ export interface Agent {
 
 export interface TrainingProgram {
   id: string;
+  organization_id?: string;
   title: string;
   description: string | null;
   certification_type: string | null;
   module_count: number;
   is_published: boolean;
+}
+
+export interface TrainingModule {
+  id: string;
+  program_id: string;
+  organization_id: string;
+  title: string;
+  description: string | null;
+  sort_order: number;
+  content: {
+    body?: string;
+    storage_path?: string;
+    file_name?: string;
+    mime_type?: string;
+  };
+}
+
+export interface TrainingProgramDetail extends TrainingProgram {
+  modules: TrainingModule[];
+}
+
+export interface AgentTrainingAssignment {
+  id: string;
+  agent_id: string;
+  agent_name: string;
+  program_id: string;
+  program_title: string;
+  modules_completed: number;
+  total_modules: number;
+  percent_complete: number;
 }
 
 export interface TestScenario {
@@ -110,10 +141,12 @@ export interface DashboardStats {
 }
 
 export interface OnboardingRecord {
+  id?: string;
   agent_id: string;
   agent_name: string;
   progress_percent: number;
   checklist: { key: string; label: string; completed: boolean }[];
+  completed_at?: string | null;
 }
 
 export interface AgentVersion {

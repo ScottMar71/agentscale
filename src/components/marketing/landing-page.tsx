@@ -113,8 +113,8 @@ export function LandingPage() {
             <a href="#contact" className={buttonVariants({ size: "lg" })}>
               Book a demo
             </a>
-            <Link href="/dashboard" className={buttonVariants({ size: "lg", variant: "outline" })}>
-              Explore the platform
+            <Link href="/signup" className={buttonVariants({ size: "lg", variant: "outline" })}>
+              Start free trial
             </Link>
           </div>
         </div>

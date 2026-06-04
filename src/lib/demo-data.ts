@@ -9,6 +9,7 @@ import type {
   OnboardingRecord,
   ScenarioRun,
   TestScenario,
+  TrainingModule,
   TrainingProgram,
 } from "@/types";
 
@@ -192,6 +193,26 @@ export const demoPrograms: TrainingProgram[] = [
     is_published: true,
   },
 ];
+
+export const demoModules: Record<string, TrainingModule[]> = {
+  tp1: [
+    { id: "m1", program_id: "tp1", organization_id: DEMO_ORG_ID, title: "Product Knowledge", description: null, sort_order: 1, content: {} },
+    { id: "m2", program_id: "tp1", organization_id: DEMO_ORG_ID, title: "Customer Communications", description: null, sort_order: 2, content: {} },
+    { id: "m3", program_id: "tp1", organization_id: DEMO_ORG_ID, title: "Escalation Handling", description: null, sort_order: 3, content: {} },
+    { id: "m4", program_id: "tp1", organization_id: DEMO_ORG_ID, title: "Compliance", description: null, sort_order: 4, content: {} },
+  ],
+  tp2: [
+    { id: "m5", program_id: "tp2", organization_id: DEMO_ORG_ID, title: "Product Knowledge", description: null, sort_order: 1, content: {} },
+    { id: "m6", program_id: "tp2", organization_id: DEMO_ORG_ID, title: "Qualification", description: null, sort_order: 2, content: {} },
+    { id: "m7", program_id: "tp2", organization_id: DEMO_ORG_ID, title: "Discovery", description: null, sort_order: 3, content: {} },
+    { id: "m8", program_id: "tp2", organization_id: DEMO_ORG_ID, title: "Objection Handling", description: null, sort_order: 4, content: {} },
+  ],
+  tp3: [
+    { id: "m9", program_id: "tp3", organization_id: DEMO_ORG_ID, title: "Data Processing Principles", description: null, sort_order: 1, content: {} },
+    { id: "m10", program_id: "tp3", organization_id: DEMO_ORG_ID, title: "Subject Access Requests", description: null, sort_order: 2, content: {} },
+    { id: "m11", program_id: "tp3", organization_id: DEMO_ORG_ID, title: "Breach Response", description: null, sort_order: 3, content: {} },
+  ],
+};
 
 export const demoScenarios: TestScenario[] = [
   {

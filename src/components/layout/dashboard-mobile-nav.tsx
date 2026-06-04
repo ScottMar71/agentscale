@@ -11,8 +11,15 @@ import {
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/brand/logo";
 import { SidebarNav } from "@/components/layout/dashboard-sidebar";
+import type { UserOrganization } from "@/lib/auth/session";
 
-export function DashboardMobileNav() {
+export function DashboardMobileNav({
+  organizations = [],
+  currentOrgId,
+}: {
+  organizations?: UserOrganization[];
+  currentOrgId?: string;
+}) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -32,7 +39,11 @@ export function DashboardMobileNav() {
         </SheetTrigger>
         <SheetContent side="left" className="w-72 max-w-[80vw] p-0" showCloseButton={false}>
           <SheetTitle className="sr-only">Navigation</SheetTitle>
-          <SidebarNav onNavigate={() => setOpen(false)} />
+          <SidebarNav
+            onNavigate={() => setOpen(false)}
+            organizations={organizations}
+            currentOrgId={currentOrgId}
+          />
         </SheetContent>
       </Sheet>
       <Logo wordmarkClassName="text-brand-foreground" />

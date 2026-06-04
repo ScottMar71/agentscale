@@ -40,16 +40,25 @@ vercel env pull .env.local
 npm run dev
 ```
 
-## Supabase (important)
+## Supabase
 
-AgentScale needs its **own schema** (`supabase/migrations/20240604000000_initial_schema.sql`).
+| Field | Value |
+|-------|-------|
+| **Project** | AgentScale (`rffhcgakipfispuqbhpg`) |
+| **URL** | https://rffhcgakipfispuqbhpg.supabase.co |
+| **Region** | eu-west-1 |
+| **Dashboard** | https://supabase.com/dashboard/project/rffhcgakipfispuqbhpg |
 
-Do **not** run that migration on unrelated projects (e.g. EnableFlow, RunPattern). Either:
+Migrations applied: `initial_schema`, `create_organization`, `training_storage`, `harden_function_grants`.
 
-1. Create a new Supabase project named **agentscale**, or  
-2. Link it via Vercel → Integrations → Supabase  
+Local keys live in `.env.local`. For production, add the same vars in Vercel (or `vercel env pull` after linking the integration).
 
-Then run the migration in the SQL Editor and add keys to Vercel env.
+**Auth redirect URLs** (Supabase → Authentication → URL configuration):
+
+- Site URL: `http://localhost:3000` (dev) and `https://agentscale.vercel.app` (prod)
+- Redirect URLs: `http://localhost:3000/auth/callback`, `https://agentscale.vercel.app/auth/callback`
+
+Add `SUPABASE_SERVICE_ROLE_KEY` from Project Settings → API (server-only; Stripe webhooks).
 
 ## GitHub
 
