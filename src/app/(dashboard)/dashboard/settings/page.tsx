@@ -1,8 +1,8 @@
 import { DashboardHeader } from "@/components/layout/dashboard-header";
+import { ConnectionStatusPanel } from "@/components/settings/connection-status";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PLANS } from "@/lib/constants";
 import { Badge } from "@/components/ui/badge";
-
 export default function SettingsPage() {
   return (
     <>
@@ -25,20 +25,7 @@ export default function SettingsPage() {
             </p>
           </CardContent>
         </Card>
-        <Card className="border-slate-200">
-          <CardHeader>
-            <CardTitle>Integrations</CardTitle>
-          </CardHeader>
-          <CardContent className="text-sm text-slate-600">
-            <ul className="space-y-2">
-              <li>Supabase — Database & Auth</li>
-              <li>Stripe — Billing</li>
-              <li>Resend — Email notifications</li>
-              <li>OpenAI — Scenario evaluation</li>
-              <li>Langfuse — Observability (optional)</li>
-            </ul>
-          </CardContent>
-        </Card>
+        <ConnectionStatusPanel />
         <Card className="border-slate-200">
           <CardHeader>
             <CardTitle>Roles</CardTitle>

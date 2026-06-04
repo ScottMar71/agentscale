@@ -75,11 +75,22 @@ See [.env.example](.env.example) for all keys.
 
 Linear is configured **globally** for all Cursor projects (`~/.cursor/rules/linear-tasks.mdc`, `~/.cursor/skills/linear-tasks/`).
 
+**Local sync**
+
 1. Copy `~/.cursor/linear.env.example` → `~/.cursor/linear.env` and add your API key from [linear.app/settings/api](https://linear.app/settings/api).
 2. Optional per-repo override: `LINEAR_TEAM_ID` in `.env.local` (default team: **AgentScale**).
-3. Run `npm run linear:sync` to create issues from `docs/IMPLEMENTATION_PLAN.md` (skips issues that already exist by title).
+3. Run `npm run linear:sync` to create issues from the implementation plan (skips duplicates by title).
 
-Use the **Linear** Cursor plugin in chat for issues in any repo (OAuth, no API key required).
+**Automatic on deploy (GitHub Actions)**
+
+After push to `main`, `.github/workflows/linear-sync.yml` runs the same sync when Linear-related files change.
+
+1. Add repo secret **`LINEAR_API_KEY`** (GitHub → Settings → Secrets → Actions).
+2. Optional variable **`LINEAR_TEAM_ID`** (defaults to `AgentScale`).
+
+See [docs/LINEAR_CI.md](docs/LINEAR_CI.md) for full setup.
+
+Use the **Linear** Cursor plugin in chat for ad-hoc issue updates (OAuth).
 
 ## Documentation
 

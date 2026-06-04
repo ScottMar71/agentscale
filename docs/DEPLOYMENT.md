@@ -94,11 +94,31 @@ vercel env pull .env.local
 
 ---
 
-## 5. Verify deployment
+## 5. Sync local env to Vercel
+
+If you have `.env.local` filled in:
+
+```bash
+node scripts/push-vercel-env.mjs .env.local
+vercel --prod   # redeploy after adding secrets
+```
+
+## 6. Verify deployment
+
+**Live:** https://agentscale.vercel.app
 
 ```bash
 vercel ls
-curl -I https://your-project.vercel.app
+curl -I https://agentscale.vercel.app
 ```
 
 Open `/dashboard` for the product UI and `/` for the landing page.
+
+## Current project (already linked)
+
+| Item | Value |
+|------|--------|
+| Vercel project | `agentscale` |
+| Team | MHSM's projects |
+| Production URL | https://agentscale.vercel.app |
+| Vercel dashboard | https://vercel.com/qfjcfc82cq-6912s-projects/agentscale |

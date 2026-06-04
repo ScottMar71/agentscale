@@ -1,0 +1,46 @@
+# Sync implementation-plan tasks to Linear after deploy (push to main).
+# Idempotent: existing issues are skipped by title.
+name: Sync Linear tasks
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/lib/linear/**"
+      - "docs/IMPLEMENTATION_PLAN.md"
+      - "scripts/sync-linear-tasks.ts"
+      - ".github/workflows/linear-sync.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: linear-sync-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Sync tasks to Linear
+        env:
+          LINEAR_API_KEY: ${{ secrets.LINEAR_API_KEY }}
+          LINEAR_TEAM_ID: ${{ vars.LINEAR_TEAM_ID }}
+        run: |
+          if [ -z "$LINEAR_API_KEY" ]; then
+            echo "::error::LINEAR_API_KEY secret is not set. Add it in GitHub → Settings → Secrets and variables → Actions."
+            exit 1
+          fi
+          export LINEAR_TEAM_ID="${LINEAR_TEAM_ID:-AgentScale}"
+          npm run linear:sync
