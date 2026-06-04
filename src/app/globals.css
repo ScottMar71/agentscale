@@ -1,8 +1,30 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #0b1426;
+  --card: #ffffff;
+  --card-foreground: #0b1426;
+  --primary: #2563eb;
+  --primary-foreground: #ffffff;
+  --secondary: #f4f6f8;
+  --secondary-foreground: #1e3a5f;
+  --muted: #f4f6f8;
+  --muted-foreground: #64748b;
+  --accent: #f4f6f8;
+  --accent-foreground: #0b1426;
+  --destructive: #dc2626;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #2563eb;
+  --radius: 0.5rem;
+  --agentscale-navy: #0b1426;
+  --agentscale-blue: #1e3a5f;
+  --agentscale-electric: #2563eb;
 }
 
 @theme inline {
@@ -10,17 +32,13 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-agentscale-navy: var(--agentscale-navy);
+  --color-agentscale-electric: var(--agentscale-electric);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
