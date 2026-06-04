@@ -49,6 +49,10 @@ npx supabase db push
 
 See [.env.example](.env.example) for all keys.
 
+## Documentation (GitHub · Obsidian · Cursor)
+
+Product and engineering docs live in [`docs/`](docs/README.md). Obsidian vault folders `Documentation/` and `Products/Agent Scale/` symlink into this repo — edit once, commit to GitHub, use Obsidian MCP in Cursor on `docs/`.
+
 ## Product modules
 
 - **Agent Registry** — `/dashboard/agents`

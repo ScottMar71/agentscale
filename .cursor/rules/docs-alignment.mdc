@@ -1,0 +1,30 @@
+---
+description: Docs live in docs/ — synced with Obsidian symlinks and GitHub
+globs: docs/**
+alwaysApply: false
+---
+
+# Documentation alignment (GitHub · Cursor · Obsidian)
+
+## Source of truth
+
+- **Repo path:** `docs/` (this project)
+- **GitHub:** `ScottMar71/agentscale` — commit changes under `docs/`
+- **Obsidian:** vault symlinks `Documentation/` → `docs/`, `Products/Agent Scale/` → `docs/product/`
+- **MCP:** global Obsidian MCP vault = `docs/`
+
+## When editing product or planning docs
+
+1. Edit files under `docs/` or `docs/product/` (not duplicate copies elsewhere).
+2. Product notes: Vision, Features, User-Stories, Database-Schema, etc. live in `docs/product/`.
+3. Engineering notes: ARCHITECTURE, IMPLEMENTATION_PLAN, MVP_ROADMAP, DEPLOYMENT at `docs/` root.
+4. After substantive doc changes, mention that the user may want to `git add docs/` and push.
+
+## Do not
+
+- Create parallel copies of the same doc outside `docs/`
+- Point MCP at the old vault-only path (`Documents/Obsidian Vault`) for AgentScale product content
+
+## Vault-only folders
+
+Obsidian folders such as `Business Ideas/`, `Prompts/`, `Customers/` are local to the vault and not in git unless explicitly added under `docs/`.
