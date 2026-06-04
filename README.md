@@ -15,6 +15,13 @@ Enterprise AI Workforce Management Platform — onboard, train, certify, govern,
 | AI | OpenAI API |
 | Hosting | Vercel |
 
+## Deployed on Vercel
+
+- **Production:** https://agentscale.vercel.app
+- **Dashboard:** https://vercel.com/qfjcfc82cq-6912s-projects/agentscale
+
+See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for GitHub + env variable setup.
+
 ## Quick start
 
 ```bash
