@@ -39,6 +39,18 @@
 24. Sentry + Vercel Analytics
 25. Playwright smoke tests
 
+### Sprint 7 — Pilot readiness ✅
+26. Org invite flow (email + accept page + team settings)
+27. Role-based UI — hide write actions for Viewer
+28. Live incidents module (log, update, audit trail)
+29. Resend invite emails (contact form already wired)
+
+### Sprint 8 — Enterprise narrative ✅
+30. Performance snapshots (manual import + webhook API)
+31. Version control + rollback (live `agent_versions`)
+32. Incident → reassessment workflow (auto-create scenario)
+33. PDF audit pack export
+
 ## Testing approach
 
 | Layer | Tool |

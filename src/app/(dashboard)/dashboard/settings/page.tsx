@@ -1,11 +1,14 @@
 import { DashboardHeader } from "@/components/layout/dashboard-header";
 import { ConnectionStatusPanel } from "@/components/settings/connection-status";
 import { BillingPanel } from "@/components/settings/billing-panel";
+import { TeamPanel } from "@/components/settings/team-panel";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { signOut } from "@/app/actions/auth";
 import { getCurrentOrganization, getAuthUser } from "@/lib/auth/session";
 import { getOrganizationBilling } from "@/lib/data/organization";
+import { listPendingInvites, listTeamMembers } from "@/lib/data/team";
 import { isAuthEnabled } from "@/lib/auth/config";
+import { isOrgAdmin } from "@/lib/auth/permissions";
 import { Button } from "@/components/ui/button";
 
 export default async function SettingsPage({
@@ -17,6 +20,9 @@ export default async function SettingsPage({
   const user = authOn ? await getAuthUser() : null;
   const org = authOn ? await getCurrentOrganization() : null;
   const billing = authOn ? await getOrganizationBilling() : null;
+  const [members, invites] = authOn
+    ? await Promise.all([listTeamMembers(), listPendingInvites()])
+    : [[], []];
   const params = await searchParams;
   const checkoutSuccess = params.checkout === "success";
 
@@ -50,6 +56,21 @@ export default async function SettingsPage({
           </CardContent>
         </Card>
 
+        {authOn && org && (
+          <Card>
+            <CardHeader>
+              <CardTitle>Team</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <TeamPanel
+                members={members}
+                invites={invites}
+                isAdmin={isOrgAdmin(org.role)}
+              />
+            </CardContent>
+          </Card>
+        )}
+
         {authOn && (
           <BillingPanel
             billing={billing}
@@ -70,8 +91,19 @@ export default async function SettingsPage({
           <CardHeader>
             <CardTitle>Roles</CardTitle>
           </CardHeader>
-          <CardContent className="text-sm text-muted-foreground">
-            Super Admin · Organisation Admin · Manager · Viewer
+          <CardContent className="space-y-2 text-sm text-muted-foreground">
+            <p>
+              <span className="font-medium text-foreground">Org admin</span> — billing, team
+              invites, certification approvals
+            </p>
+            <p>
+              <span className="font-medium text-foreground">Manager</span> — create and edit
+              agents, scenarios, training, incidents
+            </p>
+            <p>
+              <span className="font-medium text-foreground">Viewer</span> — read-only access
+              across the workspace
+            </p>
           </CardContent>
         </Card>
       </div>

@@ -4,7 +4,8 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { isAuthEnabled } from "@/lib/auth/config";
-import { getCurrentOrganizationId } from "@/lib/auth/session";
+import { getCurrentOrganization, getCurrentOrganizationId } from "@/lib/auth/session";
+import { canWriteOrg } from "@/lib/auth/permissions";
 import {
   insertTrainingProgram,
   insertTrainingModule,
@@ -44,6 +45,11 @@ export async function createTrainingProgram(
 
   const organizationId = await getCurrentOrganizationId();
   if (!organizationId) return { error: "No workspace selected." };
+
+  const org = await getCurrentOrganization();
+  if (!org || !canWriteOrg(org.role)) {
+    return { error: "You do not have permission to create training programmes." };
+  }
 
   const { program, error } = await insertTrainingProgram(organizationId, {
     title: parsed.data.title,
@@ -86,6 +92,11 @@ export async function addTrainingModule(
   const organizationId = await getCurrentOrganizationId();
   if (!organizationId) return { error: "No workspace selected." };
 
+  const org = await getCurrentOrganization();
+  if (!org || !canWriteOrg(org.role)) {
+    return { error: "You do not have permission to add modules." };
+  }
+
   const { module, error } = await insertTrainingModule(organizationId, programId, {
     title: parsed.data.title,
     description: parsed.data.description?.trim() || null,
@@ -110,6 +121,11 @@ export async function uploadModuleContent(
 
   const organizationId = await getCurrentOrganizationId();
   if (!organizationId) return { error: "No workspace selected." };
+
+  const org = await getCurrentOrganization();
+  if (!org || !canWriteOrg(org.role)) {
+    return { error: "You do not have permission to upload module content." };
+  }
 
   const file = formData.get("file");
   if (!(file instanceof File) || file.size === 0) {
@@ -169,6 +185,11 @@ export async function assignTrainingProgram(
 
   const organizationId = await getCurrentOrganizationId();
   if (!organizationId) return { error: "No workspace selected." };
+
+  const org = await getCurrentOrganization();
+  if (!org || !canWriteOrg(org.role)) {
+    return { error: "You do not have permission to assign programmes." };
+  }
 
   const { assignment, error } = await assignProgramToAgent(
     organizationId,

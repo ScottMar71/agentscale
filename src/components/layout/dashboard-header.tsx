@@ -4,18 +4,32 @@ import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
+type DashboardBadgeVariant = "live" | "demo";
+
 interface DashboardHeaderProps {
   title: string;
   description?: string;
   action?: { label: string; href?: string };
   badge?: string;
+  badgeVariant?: DashboardBadgeVariant;
 }
+
+const badgeStyles: Record<DashboardBadgeVariant, string> = {
+  live: "gap-1.5 bg-success-subtle text-success",
+  demo: "gap-1.5 bg-warning-subtle text-warning",
+};
+
+const badgeDotStyles: Record<DashboardBadgeVariant, string> = {
+  live: "bg-success",
+  demo: "bg-warning",
+};
 
 export function DashboardHeader({
   title,
   description,
   action,
   badge,
+  badgeVariant = "live",
 }: DashboardHeaderProps) {
   return (
     <div className="flex flex-col gap-4 border-b border-border bg-background px-4 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-8 sm:py-6">
@@ -25,8 +39,11 @@ export function DashboardHeader({
             {title}
           </h1>
           {badge && (
-            <Badge className="gap-1.5 bg-success-subtle text-success">
-              <span className="size-1.5 rounded-full bg-success" aria-hidden />
+            <Badge className={badgeStyles[badgeVariant]}>
+              <span
+                className={`size-1.5 rounded-full ${badgeDotStyles[badgeVariant]}`}
+                aria-hidden
+              />
               {badge}
             </Badge>
           )}

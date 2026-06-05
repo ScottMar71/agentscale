@@ -7,10 +7,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
 import { getGovernanceOverview } from "@/lib/data/governance";
 import { isAuthEnabled } from "@/lib/auth/config";
+import { getCurrentOrganization } from "@/lib/auth/session";
+import { canWriteOrg } from "@/lib/auth/permissions";
 import { Shield, Bot, Award, AlertTriangle } from "lucide-react";
 
 export default async function GovernancePage() {
-  const { stats, auditLogs, isDemo } = await getGovernanceOverview();
+  const [{ stats, auditLogs, isDemo }, org] = await Promise.all([
+    getGovernanceOverview(),
+    getCurrentOrganization(),
+  ]);
+  const canWrite = canWriteOrg(org?.role);
 
   return (
     <>
@@ -18,6 +24,7 @@ export default async function GovernancePage() {
         title="Governance Centre"
         description="Compliance visibility, risk exposure, and immutable audit logs"
         badge={isDemo ? "Demo data" : undefined}
+        badgeVariant={isDemo ? "demo" : "live"}
       />
       <div className="flex-1 space-y-8 overflow-y-auto p-4 sm:p-8">
         {isDemo && (
@@ -74,7 +81,7 @@ export default async function GovernancePage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between gap-4">
             <CardTitle>Audit log</CardTitle>
-            <AuditExportButton disabled={isDemo || !isAuthEnabled()} />
+            <AuditExportButton disabled={isDemo || !isAuthEnabled() || !canWrite} />
           </CardHeader>
           <CardContent>
             <AuditLogList logs={auditLogs} />

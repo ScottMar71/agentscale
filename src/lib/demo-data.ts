@@ -368,6 +368,7 @@ export const demoIncidents: Incident[] = [
     severity: "high",
     status: "remediating",
     root_cause: "Outdated policy pack in knowledge base",
+    reassessment_scenario_id: null,
     created_at: "2026-06-02T09:20:00Z",
   },
   {
@@ -379,6 +380,7 @@ export const demoIncidents: Incident[] = [
     severity: "medium",
     status: "resolved",
     root_cause: "Missing escalation module training",
+    reassessment_scenario_id: null,
     created_at: "2026-05-20T14:00:00Z",
   },
 ];

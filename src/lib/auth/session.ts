@@ -78,7 +78,45 @@ export async function getCurrentOrganizationId(
 }
 
 export async function getCurrentOrganization() {
-  const orgs = await getUserOrganizations();
+  const orgs = await getAccessibleOrganizations();
   const id = await getCurrentOrganizationId(orgs);
   return orgs.find((o) => o.id === id) ?? null;
+}
+
+export async function getIsSuperAdmin(): Promise<boolean> {
+  if (!isSupabaseConfigured()) return false;
+
+  const supabase = await createClient();
+  const user = await getAuthUser();
+  if (!user) return false;
+
+  const { data } = await supabase
+    .from("profiles")
+    .select("is_super_admin")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  return Boolean(data?.is_super_admin);
+}
+
+/** Org list for switcher — super admins see every tenant. */
+export async function getAccessibleOrganizations(): Promise<UserOrganization[]> {
+  if (await getIsSuperAdmin()) {
+    const supabase = await createClient();
+    const { data, error } = await supabase
+      .from("organizations")
+      .select("id, name, slug")
+      .order("name");
+
+    if (error || !data) return [];
+
+    return data.map((org) => ({
+      id: org.id,
+      name: org.name,
+      slug: org.slug,
+      role: "org_admin" as OrgRole,
+    }));
+  }
+
+  return getUserOrganizations();
 }

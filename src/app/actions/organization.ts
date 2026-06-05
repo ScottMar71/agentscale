@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { CURRENT_ORG_COOKIE, CURRENT_ORG_COOKIE_OPTIONS } from "@/lib/auth/org-cookie";
+import { getIsSuperAdmin } from "@/lib/auth/session";
 import { slugifyOrganizationName } from "@/lib/utils/slug";
 
 const createOrgSchema = z.object({
@@ -81,15 +82,17 @@ export async function switchOrganization(orgId: string) {
     redirect("/login");
   }
 
-  const { data: membership } = await supabase
-    .from("organization_members")
-    .select("organization_id")
-    .eq("user_id", user.id)
-    .eq("organization_id", orgId)
-    .maybeSingle();
+  if (!(await getIsSuperAdmin())) {
+    const { data: membership } = await supabase
+      .from("organization_members")
+      .select("organization_id")
+      .eq("user_id", user.id)
+      .eq("organization_id", orgId)
+      .maybeSingle();
 
-  if (!membership) {
-    return { error: "You do not have access to that organization." };
+    if (!membership) {
+      return { error: "You do not have access to that organization." };
+    }
   }
 
   const cookieStore = await cookies();

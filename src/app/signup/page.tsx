@@ -7,10 +7,16 @@ import { APP_NAME } from "@/lib/constants";
 import { isAuthEnabled } from "@/lib/auth/config";
 import { redirect } from "next/navigation";
 
-export default function SignUpPage() {
+export default async function SignUpPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ email?: string; next?: string }>;
+}) {
   if (!isAuthEnabled()) {
     redirect("/login");
   }
+
+  const params = await searchParams;
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-muted px-4 py-10">
@@ -29,7 +35,7 @@ export default function SignUpPage() {
           </p>
         </CardHeader>
         <CardContent>
-          <SignUpForm />
+          <SignUpForm defaultEmail={params.email} />
         </CardContent>
       </Card>
       <Link

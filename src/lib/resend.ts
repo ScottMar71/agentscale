@@ -35,3 +35,33 @@ export async function sendContactNotification(data: {
 
   return { ok: true };
 }
+
+export async function sendOrgInviteEmail(data: {
+  to: string;
+  organizationName: string;
+  inviterName: string;
+  role: string;
+  inviteUrl: string;
+}) {
+  const resend = getResend();
+  const from = process.env.RESEND_FROM_EMAIL ?? "AgentScale <onboarding@resend.dev>";
+
+  if (!resend) {
+    console.info("[AgentScale] Org invite (Resend not configured):", data);
+    return { ok: true, demo: true };
+  }
+
+  await resend.emails.send({
+    from,
+    to: [data.to],
+    subject: `You're invited to ${data.organizationName} on AgentScale`,
+    html: `
+      <h2>Join ${data.organizationName} on AgentScale</h2>
+      <p>${data.inviterName} invited you as <strong>${data.role.replace("_", " ")}</strong>.</p>
+      <p><a href="${data.inviteUrl}">Accept invitation</a></p>
+      <p>This link expires in 7 days. If you don't have an account yet, sign up with this email first.</p>
+    `,
+  });
+
+  return { ok: true };
+}

@@ -15,10 +15,12 @@ import {
   Shield,
   Settings,
   Sparkles,
+  ShieldEllipsis,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/brand/logo";
 import { OrgSwitcher } from "@/components/layout/org-switcher";
+import { DataModeIndicator } from "@/components/layout/data-mode-banner";
 import type { UserOrganization } from "@/lib/auth/session";
 
 const iconMap = {
@@ -52,10 +54,16 @@ export function SidebarNav({
   onNavigate,
   organizations = [],
   currentOrgId,
+  authEnabled = false,
+  organizationName,
+  isSuperAdmin = false,
 }: {
   onNavigate?: () => void;
   organizations?: UserOrganization[];
   currentOrgId?: string;
+  authEnabled?: boolean;
+  organizationName?: string | null;
+  isSuperAdmin?: boolean;
 }) {
   const pathname = usePathname();
 
@@ -78,6 +86,10 @@ export function SidebarNav({
         {organizations.length > 0 && currentOrgId && (
           <div className="mt-3 px-1">
             <OrgSwitcher organizations={organizations} currentOrgId={currentOrgId} />
+            <DataModeIndicator
+              authEnabled={authEnabled}
+              organizationName={organizationName}
+            />
           </div>
         )}
       </div>
@@ -110,6 +122,23 @@ export function SidebarNav({
         })}
       </ul>
       <div className="space-y-0.5 border-t border-white/10 px-3 py-4">
+        {isSuperAdmin && (
+          <Link
+            href="/dashboard/admin"
+            onClick={onNavigate}
+            aria-current={pathname === "/dashboard/admin" ? "page" : undefined}
+            className={cn(
+              "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium outline-none transition-colors duration-200",
+              "focus-visible:ring-2 focus-visible:ring-brand-accent",
+              pathname === "/dashboard/admin"
+                ? "bg-primary text-primary-foreground shadow-sm"
+                : "text-brand-foreground/70 hover:bg-white/5 hover:text-brand-foreground"
+            )}
+          >
+            <ShieldEllipsis className="h-4 w-4" aria-hidden />
+            Platform Admin
+          </Link>
+        )}
         <Link
           href="/dashboard/demo"
           onClick={onNavigate}
@@ -141,15 +170,24 @@ export function SidebarNav({
 export function DashboardSidebar({
   organizations = [],
   currentOrgId,
+  authEnabled = false,
+  organizationName,
+  isSuperAdmin = false,
 }: {
   organizations?: UserOrganization[];
   currentOrgId?: string;
+  authEnabled?: boolean;
+  organizationName?: string | null;
+  isSuperAdmin?: boolean;
 }) {
   return (
     <aside className="hidden h-full w-64 shrink-0 border-r border-border/0 lg:block">
       <SidebarNav
         organizations={organizations}
         currentOrgId={currentOrgId}
+        authEnabled={authEnabled}
+        organizationName={organizationName}
+        isSuperAdmin={isSuperAdmin}
       />
     </aside>
   );

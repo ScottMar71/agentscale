@@ -4,7 +4,8 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { isAuthEnabled } from "@/lib/auth/config";
-import { getCurrentOrganizationId } from "@/lib/auth/session";
+import { getCurrentOrganization, getCurrentOrganizationId } from "@/lib/auth/session";
+import { canWriteOrg } from "@/lib/auth/permissions";
 import {
   insertAgent,
   updateAgentRecord,
@@ -63,6 +64,11 @@ export async function createAgent(
     return { error: "No workspace selected. Complete setup first." };
   }
 
+  const org = await getCurrentOrganization();
+  if (!org || !canWriteOrg(org.role)) {
+    return { error: "You do not have permission to register agents." };
+  }
+
   const supabase = await createClient();
   const {
     data: { user },
@@ -107,6 +113,11 @@ export async function updateAgent(
   const organizationId = await getCurrentOrganizationId();
   if (!organizationId) {
     return { error: "No workspace selected." };
+  }
+
+  const org = await getCurrentOrganization();
+  if (!org || !canWriteOrg(org.role)) {
+    return { error: "You do not have permission to edit agents." };
   }
 
   const payload = toPayload(parsed.data);

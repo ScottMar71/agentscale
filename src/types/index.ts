@@ -129,7 +129,24 @@ export interface Incident {
   severity: "low" | "medium" | "high" | "critical";
   status: string;
   root_cause: string | null;
+  reassessment_scenario_id: string | null;
   created_at: string;
+}
+
+export interface PerformanceSnapshot {
+  id: string;
+  agent_id: string;
+  agent_name: string;
+  period_start: string;
+  period_end: string;
+  accuracy: number | null;
+  success_rate: number | null;
+  escalation_rate: number | null;
+  error_rate: number | null;
+  hallucination_rate: number | null;
+  cost_per_task: number | null;
+  avg_response_time_ms: number | null;
+  health_score: number | null;
 }
 
 export interface DashboardStats {
@@ -158,5 +175,6 @@ export interface AgentVersion {
   version_label: string;
   is_current: boolean;
   model_provider: string | null;
+  model_version?: string | null;
   created_at: string;
 }

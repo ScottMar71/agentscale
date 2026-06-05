@@ -2,7 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { isAuthEnabled } from "@/lib/auth/config";
-import { getCurrentOrganizationId } from "@/lib/auth/session";
+import { getCurrentOrganization, getCurrentOrganizationId } from "@/lib/auth/session";
+import { canWriteOrg } from "@/lib/auth/permissions";
 import { toggleOnboardingItem } from "@/lib/data/onboarding";
 import { writeAuditLog } from "@/lib/data/audit";
 
@@ -21,6 +22,11 @@ export async function updateOnboardingChecklistItem(
 
   const organizationId = await getCurrentOrganizationId();
   if (!organizationId) return { error: "No workspace selected." };
+
+  const org = await getCurrentOrganization();
+  if (!org || !canWriteOrg(org.role)) {
+    return { error: "You do not have permission to update onboarding." };
+  }
 
   const { record, error } = await toggleOnboardingItem(
     organizationId,

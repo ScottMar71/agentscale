@@ -1,12 +1,18 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { DashboardHeader } from "@/components/layout/dashboard-header";
 import { AgentForm } from "@/components/agents/agent-form";
 import { getOrganizationBilling } from "@/lib/data/organization";
+import { getCurrentOrganization } from "@/lib/auth/session";
+import { canWriteOrg } from "@/lib/auth/permissions";
 import { formatAgentLimit } from "@/lib/billing/plans";
 import { Card, CardContent } from "@/components/ui/card";
 
 export default async function NewAgentPage() {
-  const billing = await getOrganizationBilling();
+  const [billing, org] = await Promise.all([getOrganizationBilling(), getCurrentOrganization()]);
+  if (org && !canWriteOrg(org.role)) {
+    redirect("/dashboard/agents");
+  }
 
   return (
     <>

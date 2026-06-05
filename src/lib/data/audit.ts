@@ -9,7 +9,8 @@ type AuditAction =
   | "certify"
   | "approve"
   | "reject"
-  | "revoke";
+  | "revoke"
+  | "rollback";
 
 export async function writeAuditLog(params: {
   organizationId: string;

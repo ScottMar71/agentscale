@@ -206,6 +206,17 @@ export async function insertAgent(
     await ensureAgentOnboarding(organizationId, data.id as string);
   }
 
+  const { createAgentVersionSnapshot } = await import("@/lib/data/versions");
+  await createAgentVersionSnapshot({
+    organizationId,
+    agentId: data.id as string,
+    versionLabel: payload.prompt_version ?? "1.0.0",
+    modelProvider: payload.model_provider,
+    modelVersion: payload.model_version,
+    createdBy: ownerId,
+    isCurrent: true,
+  });
+
   return { agent: mapAgentRow(data as AgentRow) };
 }
 
@@ -215,6 +226,14 @@ export async function updateAgentRecord(
   payload: AgentUpsertPayload
 ): Promise<{ agent: Agent | null; error?: string }> {
   const supabase = await createClient();
+
+  const { data: existing } = await supabase
+    .from("agents")
+    .select("prompt_version, model_provider, model_version")
+    .eq("organization_id", organizationId)
+    .eq("id", agentId)
+    .maybeSingle();
+
   const { data, error } = await supabase
     .from("agents")
     .update({
@@ -239,6 +258,24 @@ export async function updateAgentRecord(
 
   if (error || !data) {
     return { agent: null, error: error?.message ?? "Failed to update agent" };
+  }
+
+  const versionChanged =
+    existing &&
+    (existing.prompt_version !== payload.prompt_version ||
+      existing.model_provider !== (payload.model_provider ?? null) ||
+      existing.model_version !== (payload.model_version ?? null));
+
+  if (versionChanged) {
+    const { createAgentVersionSnapshot } = await import("@/lib/data/versions");
+    await createAgentVersionSnapshot({
+      organizationId,
+      agentId,
+      versionLabel: payload.prompt_version ?? existing.prompt_version ?? "1.0.0",
+      modelProvider: payload.model_provider,
+      modelVersion: payload.model_version,
+      isCurrent: true,
+    });
   }
 
   return { agent: mapAgentRow(data as AgentRow) };

@@ -1,11 +1,18 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { DashboardHeader } from "@/components/layout/dashboard-header";
 import { ScenarioForm } from "@/components/scenarios/scenario-form";
+import { getCurrentOrganization } from "@/lib/auth/session";
+import { canWriteOrg } from "@/lib/auth/permissions";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ArrowLeft } from "lucide-react";
 
-export default function NewScenarioPage() {
+export default async function NewScenarioPage() {
+  const org = await getCurrentOrganization();
+  if (org && !canWriteOrg(org.role)) {
+    redirect("/dashboard/scenarios");
+  }
   return (
     <>
       <DashboardHeader

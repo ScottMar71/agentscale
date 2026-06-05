@@ -11,7 +11,13 @@ import { ClipboardCheck } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import type { OnboardingRecord } from "@/types";
 
-export function OnboardingBoard({ records }: { records: OnboardingRecord[] }) {
+export function OnboardingBoard({
+  records,
+  canWrite = true,
+}: {
+  records: OnboardingRecord[];
+  canWrite?: boolean;
+}) {
   if (records.length === 0) {
     return (
       <EmptyState
@@ -19,9 +25,11 @@ export function OnboardingBoard({ records }: { records: OnboardingRecord[] }) {
         title="No agents in onboarding"
         description="Register an agent with status Draft or Onboarding to track readiness here."
         action={
-          <Link href="/dashboard/agents/new" className={buttonVariants({ size: "lg" })}>
-            Register agent
-          </Link>
+          canWrite ? (
+            <Link href="/dashboard/agents/new" className={buttonVariants({ size: "lg" })}>
+              Register agent
+            </Link>
+          ) : undefined
         }
       />
     );
@@ -30,13 +38,19 @@ export function OnboardingBoard({ records }: { records: OnboardingRecord[] }) {
   return (
     <div className="space-y-6">
       {records.map((record) => (
-        <OnboardingCard key={record.agent_id} record={record} />
+        <OnboardingCard key={record.agent_id} record={record} canWrite={canWrite} />
       ))}
     </div>
   );
 }
 
-function OnboardingCard({ record }: { record: OnboardingRecord }) {
+function OnboardingCard({
+  record,
+  canWrite,
+}: {
+  record: OnboardingRecord;
+  canWrite: boolean;
+}) {
   const [pending, startTransition] = useTransition();
 
   function toggle(key: string, completed: boolean) {
@@ -74,7 +88,7 @@ function OnboardingCard({ record }: { record: OnboardingRecord }) {
             <li key={item.key}>
               <button
                 type="button"
-                disabled={pending}
+                disabled={pending || !canWrite}
                 onClick={() => toggle(item.key, !item.completed)}
                 className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm transition-colors hover:bg-muted disabled:opacity-50"
               >

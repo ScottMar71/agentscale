@@ -16,9 +16,15 @@ import type { UserOrganization } from "@/lib/auth/session";
 export function DashboardMobileNav({
   organizations = [],
   currentOrgId,
+  authEnabled = false,
+  organizationName,
+  isSuperAdmin = false,
 }: {
   organizations?: UserOrganization[];
   currentOrgId?: string;
+  authEnabled?: boolean;
+  organizationName?: string | null;
+  isSuperAdmin?: boolean;
 }) {
   const [open, setOpen] = useState(false);
 
@@ -43,6 +49,9 @@ export function DashboardMobileNav({
             onNavigate={() => setOpen(false)}
             organizations={organizations}
             currentOrgId={currentOrgId}
+            authEnabled={authEnabled}
+            organizationName={organizationName}
+            isSuperAdmin={isSuperAdmin}
           />
         </SheetContent>
       </Sheet>

@@ -31,4 +31,12 @@ export const AGENTSCALE_LINEAR_TASKS: LinearTask[] = [
   { id: 23, sprint: "Sprint 6 — Billing & production", title: "Enforce agent_limit on create" },
   { id: 24, sprint: "Sprint 6 — Billing & production", title: "Sentry + Vercel Analytics" },
   { id: 25, sprint: "Sprint 6 — Billing & production", title: "Playwright smoke tests" },
+  { id: 26, sprint: "Sprint 7 — Pilot readiness", title: "Org invite flow (email + accept page)" },
+  { id: 27, sprint: "Sprint 7 — Pilot readiness", title: "Role-based UI for Viewer role" },
+  { id: 28, sprint: "Sprint 7 — Pilot readiness", title: "Live incidents module" },
+  { id: 29, sprint: "Sprint 7 — Pilot readiness", title: "Resend org invite emails" },
+  { id: 30, sprint: "Sprint 8 — Enterprise narrative", title: "Performance snapshots (import + webhook)" },
+  { id: 31, sprint: "Sprint 8 — Enterprise narrative", title: "Version control + rollback" },
+  { id: 32, sprint: "Sprint 8 — Enterprise narrative", title: "Incident reassessment workflow" },
+  { id: 33, sprint: "Sprint 8 — Enterprise narrative", title: "PDF audit pack export" },
 ];

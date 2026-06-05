@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 
 const initial: AuthActionState = {};
 
-export function SignUpForm() {
+export function SignUpForm({ defaultEmail }: { defaultEmail?: string }) {
   const [state, action, pending] = useActionState(signUpWithPassword, initial);
 
   return (
@@ -26,6 +26,7 @@ export function SignUpForm() {
           type="email"
           autoComplete="email"
           required
+          defaultValue={defaultEmail}
           placeholder="you@company.com"
         />
       </div>

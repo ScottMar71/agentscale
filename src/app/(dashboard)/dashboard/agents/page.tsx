@@ -1,6 +1,8 @@
 import { Suspense } from "react";
 import { listAgents, listAgentDepartments } from "@/lib/data/agents";
 import { AgentRegistry } from "@/components/agents/agent-registry";
+import { getCurrentOrganization } from "@/lib/auth/session";
+import { canWriteOrg } from "@/lib/auth/permissions";
 
 interface PageProps {
   searchParams: Promise<{
@@ -18,18 +20,24 @@ export default async function AgentRegistryPage({ searchParams }: PageProps) {
     department: params.department ?? "all",
   };
 
-  const [agents, departments] = await Promise.all([
+  const [agents, departments, org] = await Promise.all([
     listAgents({
       search: filters.q,
       status: filters.status,
       department: filters.department,
     }),
     listAgentDepartments(),
+    getCurrentOrganization(),
   ]);
 
   return (
     <Suspense fallback={null}>
-      <AgentRegistry agents={agents} departments={departments} filters={filters} />
+      <AgentRegistry
+        agents={agents}
+        departments={departments}
+        filters={filters}
+        canWrite={canWriteOrg(org?.role)}
+      />
     </Suspense>
   );
 }

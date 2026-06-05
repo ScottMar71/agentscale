@@ -24,9 +24,10 @@ interface AgentRegistryProps {
     status: string;
     department: string;
   };
+  canWrite?: boolean;
 }
 
-export function AgentRegistry({ agents, departments, filters }: AgentRegistryProps) {
+export function AgentRegistry({ agents, departments, filters, canWrite = true }: AgentRegistryProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [pending, startTransition] = useTransition();
@@ -64,7 +65,7 @@ export function AgentRegistry({ agents, departments, filters }: AgentRegistryPro
       <DashboardHeader
         title="Agent Registry"
         description="Complete directory of AI agents across your organisation"
-        action={{ label: "Register agent", href: "/dashboard/agents/new" }}
+        action={canWrite ? { label: "Register agent", href: "/dashboard/agents/new" } : undefined}
       />
       <div className="flex-1 overflow-y-auto p-4 sm:p-8">
         <div

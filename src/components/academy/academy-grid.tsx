@@ -6,7 +6,13 @@ import { EmptyState } from "@/components/ui/empty-state";
 import { buttonVariants } from "@/components/ui/button";
 import type { TrainingProgram } from "@/types";
 
-export function AcademyGrid({ programs }: { programs: TrainingProgram[] }) {
+export function AcademyGrid({
+  programs,
+  canWrite = true,
+}: {
+  programs: TrainingProgram[];
+  canWrite?: boolean;
+}) {
   if (programs.length === 0) {
     return (
       <EmptyState
@@ -14,9 +20,11 @@ export function AcademyGrid({ programs }: { programs: TrainingProgram[] }) {
         title="No training programmes yet"
         description="Create your first programme to define modules and assign them to agents."
         action={
-          <Link href="/dashboard/academy/new" className={buttonVariants({ size: "lg" })}>
-            Create programme
-          </Link>
+          canWrite ? (
+            <Link href="/dashboard/academy/new" className={buttonVariants({ size: "lg" })}>
+              Create programme
+            </Link>
+          ) : undefined
         }
       />
     );

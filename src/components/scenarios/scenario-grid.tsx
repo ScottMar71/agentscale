@@ -7,7 +7,13 @@ import { buttonVariants } from "@/components/ui/button";
 import { parsePassCriteria } from "@/lib/schemas/scenario";
 import type { TestScenario } from "@/types";
 
-export function ScenarioGrid({ scenarios }: { scenarios: TestScenario[] }) {
+export function ScenarioGrid({
+  scenarios,
+  canWrite = true,
+}: {
+  scenarios: TestScenario[];
+  canWrite?: boolean;
+}) {
   if (scenarios.length === 0) {
     return (
       <EmptyState
@@ -15,9 +21,11 @@ export function ScenarioGrid({ scenarios }: { scenarios: TestScenario[] }) {
         title="No test scenarios yet"
         description="Define scenarios to evaluate agent responses with AI scoring."
         action={
-          <Link href="/dashboard/scenarios/new" className={buttonVariants({ size: "lg" })}>
-            New scenario
-          </Link>
+          canWrite ? (
+            <Link href="/dashboard/scenarios/new" className={buttonVariants({ size: "lg" })}>
+              New scenario
+            </Link>
+          ) : undefined
         }
       />
     );

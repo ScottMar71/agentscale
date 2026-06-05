@@ -4,7 +4,8 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { isAuthEnabled } from "@/lib/auth/config";
-import { getCurrentOrganizationId } from "@/lib/auth/session";
+import { getCurrentOrganization, getCurrentOrganizationId } from "@/lib/auth/session";
+import { canWriteOrg } from "@/lib/auth/permissions";
 import { writeAuditLog } from "@/lib/data/audit";
 import { applyScenarioPassGate } from "@/lib/data/scenario-cert-gate";
 import {
@@ -73,6 +74,11 @@ export async function createTestScenario(
   const organizationId = await getCurrentOrganizationId();
   if (!organizationId) return { error: "No workspace selected." };
 
+  const org = await getCurrentOrganization();
+  if (!org || !canWriteOrg(org.role)) {
+    return { error: "You do not have permission to create scenarios." };
+  }
+
   const supabase = await createClient();
   const {
     data: { user },
@@ -124,6 +130,11 @@ export async function updateTestScenarioAction(
   const organizationId = await getCurrentOrganizationId();
   if (!organizationId) return { error: "No workspace selected." };
 
+  const org = await getCurrentOrganization();
+  if (!org || !canWriteOrg(org.role)) {
+    return { error: "You do not have permission to update scenarios." };
+  }
+
   const { scenario, error } = await updateTestScenario(organizationId, scenarioId, {
     name: parsed.data.name,
     prompt: parsed.data.prompt,
@@ -162,6 +173,11 @@ export async function runTestScenario(
 
   const organizationId = await getCurrentOrganizationId();
   if (!organizationId) return { error: "No workspace selected." };
+
+  const org = await getCurrentOrganization();
+  if (!org || !canWriteOrg(org.role)) {
+    return { error: "You do not have permission to run scenarios." };
+  }
 
   const scenario = await getTestScenario(parsed.data.scenario_id);
   if (!scenario) return { error: "Scenario not found." };

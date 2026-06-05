@@ -1,8 +1,10 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { DashboardHeader } from "@/components/layout/dashboard-header";
 import { ScenarioForm } from "@/components/scenarios/scenario-form";
 import { getTestScenario } from "@/lib/data/scenarios";
+import { getCurrentOrganization } from "@/lib/auth/session";
+import { canWriteOrg } from "@/lib/auth/permissions";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { ArrowLeft } from "lucide-react";
@@ -13,8 +15,11 @@ export default async function EditScenarioPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const scenario = await getTestScenario(id);
+  const [scenario, org] = await Promise.all([getTestScenario(id), getCurrentOrganization()]);
   if (!scenario) notFound();
+  if (org && !canWriteOrg(org.role)) {
+    redirect(`/dashboard/scenarios/${id}`);
+  }
 
   return (
     <>

@@ -39,6 +39,7 @@ export function ExecutiveDashboardView({
             : "AI workforce health, certification coverage, and risk exposure"
         }
         badge={isDemo ? "Demo data" : stats.totalAgents > 0 ? "Live" : undefined}
+        badgeVariant={isDemo ? "demo" : "live"}
       />
       <div className="flex-1 space-y-8 overflow-y-auto p-4 sm:p-8">
         {!isDemo && stats.totalAgents === 0 && (

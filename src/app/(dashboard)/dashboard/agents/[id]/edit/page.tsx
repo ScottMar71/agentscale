@@ -1,9 +1,11 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { DashboardHeader } from "@/components/layout/dashboard-header";
 import { AgentForm } from "@/components/agents/agent-form";
 import { getAgentById } from "@/lib/data/agents";
+import { getCurrentOrganization } from "@/lib/auth/session";
+import { canWriteOrg } from "@/lib/auth/permissions";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -13,8 +15,11 @@ export default async function EditAgentPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const agent = await getAgentById(id);
+  const [agent, org] = await Promise.all([getAgentById(id), getCurrentOrganization()]);
   if (!agent) notFound();
+  if (org && !canWriteOrg(org.role)) {
+    redirect(`/dashboard/agents/${id}`);
+  }
 
   return (
     <>
