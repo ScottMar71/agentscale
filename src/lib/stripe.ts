@@ -8,15 +8,16 @@ export function getStripe() {
   return new Stripe(process.env.STRIPE_SECRET_KEY);
 }
 
+/** Self-serve plans only — Enterprise is custom pricing via sales. */
 export const STRIPE_PRICE_IDS = {
   starter: process.env.STRIPE_PRICE_STARTER ?? "",
   growth: process.env.STRIPE_PRICE_GROWTH ?? "",
-  enterprise: process.env.STRIPE_PRICE_ENTERPRISE ?? "",
 } as const;
+
+export type SelfServePlan = keyof typeof STRIPE_PRICE_IDS;
 
 export function planFromPriceId(priceId: string): keyof typeof PLANS | null {
   if (priceId === STRIPE_PRICE_IDS.starter) return "starter";
   if (priceId === STRIPE_PRICE_IDS.growth) return "growth";
-  if (priceId === STRIPE_PRICE_IDS.enterprise) return "enterprise";
   return null;
 }

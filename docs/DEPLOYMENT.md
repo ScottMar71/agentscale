@@ -70,9 +70,8 @@ Project → Settings → Environment Variables. Add for **Production**, **Previe
 | `OPENAI_API_KEY` | Scenario evaluation |
 | `STRIPE_SECRET_KEY` | Billing |
 | `STRIPE_WEBHOOK_SECRET` | From Stripe webhook endpoint |
-| `STRIPE_PRICE_STARTER` | Stripe Price ID |
-| `STRIPE_PRICE_GROWTH` | Stripe Price ID |
-| `STRIPE_PRICE_ENTERPRISE` | Stripe Price ID |
+| `STRIPE_PRICE_STARTER` | Stripe Price ID (self-serve) |
+| `STRIPE_PRICE_GROWTH` | Stripe Price ID (self-serve) |
 | `RESEND_API_KEY` | Contact form |
 | `RESEND_FROM_EMAIL` | Verified sender |
 | `CONTACT_EMAIL` | Inbox for demo requests |

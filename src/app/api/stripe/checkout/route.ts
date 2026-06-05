@@ -3,7 +3,7 @@ import { getStripe, STRIPE_PRICE_IDS } from "@/lib/stripe";
 import { z } from "zod";
 
 const schema = z.object({
-  plan: z.enum(["starter", "growth", "enterprise"]),
+  plan: z.enum(["starter", "growth"]),
   organizationId: z.string().uuid().optional(),
   customerEmail: z.string().email().optional(),
 });
