@@ -25,6 +25,11 @@ alwaysApply: false
 - Create parallel copies of the same doc outside `docs/`
 - Point MCP at the old vault-only path (`Documents/Obsidian Vault`) for AgentScale product content
 
+## Auto-filing
+
+- Drop new notes in `docs/inbox/` or vault `inbox/` with YAML `tags:` (see `docs/OBSIDIAN_FILING.md`).
+- Run `npm run file:notes` or rely on Cursor `afterFileEdit` hook + Obsidian **Auto Note Mover** plugin.
+
 ## Vault-only folders
 
 Obsidian folders such as `Business Ideas/`, `Prompts/`, `Customers/` are local to the vault and not in git unless explicitly added under `docs/`.

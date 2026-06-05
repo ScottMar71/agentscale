@@ -40,6 +40,16 @@ Global config: `~/.cursor/mcp.json` → vault path `…/agent/docs`.
 
 Toggle **obsidian** off/on in **Settings → MCP** after path changes.
 
+## Auto-filing markdown
+
+New notes in **`inbox/`** (vault or `docs/inbox/`) are moved by tags or prefixes (`IDEA-`, `REQ-`, …).
+
+- **Obsidian:** install community plugin **Auto Note Mover** (rules in vault `.obsidian/plugins/auto-note-mover/`)
+- **CLI:** `npm run file:notes`
+- **Cursor:** `afterFileEdit` hook runs the filer on `.md` saves
+
+Full guide: [OBSIDIAN_FILING.md](./OBSIDIAN_FILING.md) · rules: [filing-rules.json](./filing-rules.json)
+
 ## Conventions
 
 - Product wikilinks: `[[Vision]]`, `[[Features]]` (under `product/`)

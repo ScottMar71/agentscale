@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "hooks": {
+    "afterFileEdit": [
+      {
+        "command": ".cursor/hooks/file-obsidian-notes.sh"
+      }
+    ]
+  }
+}

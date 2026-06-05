@@ -1,0 +1,21 @@
+{
+  "vaultRoot": "/Users/scottmaryan/Documents/Obsidian Vault",
+  "docsRoot": "/Users/scottmaryan/Desktop/agent/docs",
+  "protectedFiles": ["Welcome.md", "README.md", ".gitkeep"],
+  "inboxes": ["{vaultRoot}/inbox", "{docsRoot}/inbox", "{vaultRoot}"],
+  "rules": [
+    { "tags": ["business", "idea", "ideas"], "folder": "{vaultRoot}/Business Ideas" },
+    { "tags": ["customer", "customers"], "folder": "{vaultRoot}/Customers" },
+    { "tags": ["requirement", "requirements", "req"], "folder": "{vaultRoot}/Requirements" },
+    { "tags": ["prompt", "prompts"], "folder": "{vaultRoot}/Prompts" },
+    { "tags": ["marketing", "gtm", "campaign"], "folder": "{vaultRoot}/Marketing" },
+    { "tags": ["agentscale", "product"], "folder": "{docsRoot}/product" },
+    { "tags": ["architecture", "engineering", "technical", "schema"], "folder": "{docsRoot}" },
+    { "tags": ["documentation", "deploy", "deployment"], "folder": "{docsRoot}" },
+    { "filenamePrefix": "IDEA-", "folder": "{vaultRoot}/Business Ideas" },
+    { "filenamePrefix": "REQ-", "folder": "{vaultRoot}/Requirements" },
+    { "filenamePrefix": "PROMPT-", "folder": "{vaultRoot}/Prompts" },
+    { "filenamePrefix": "CUST-", "folder": "{vaultRoot}/Customers" },
+    { "filenamePrefix": "MKT-", "folder": "{vaultRoot}/Marketing" }
+  ]
+}
