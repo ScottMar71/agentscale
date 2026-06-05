@@ -70,16 +70,19 @@ export interface AgentTrainingAssignment {
 
 export interface TestScenario {
   id: string;
+  organization_id?: string;
   name: string;
   prompt: string;
   expected_behaviour: string | null;
   pass_criteria: Record<string, unknown>;
+  is_published?: boolean;
   run_count?: number;
 }
 
 export interface ScenarioRun {
   id: string;
   scenario_id: string;
+  scenario_name?: string;
   agent_id: string;
   agent_name?: string;
   score: number | null;

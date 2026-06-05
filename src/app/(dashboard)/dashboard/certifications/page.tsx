@@ -1,19 +1,28 @@
 import { DashboardHeader } from "@/components/layout/dashboard-header";
-import { demoCertifications, demoAgentCerts } from "@/lib/demo-data";
+import { ApproverInbox } from "@/components/certifications/approver-inbox";
+import { CertificationsTable } from "@/components/certifications/certifications-table";
+import { RequestCertificationForm } from "@/components/certifications/request-certification-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { cn } from "@/lib/utils";
+import { getCurrentOrganization } from "@/lib/auth/session";
+import { listAgents } from "@/lib/data/agents";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { format } from "date-fns";
+  listCertificationDefinitions,
+  listAgentCertifications,
+  listPendingApprovals,
+} from "@/lib/data/certifications";
 
-export default function CertificationsPage() {
+export default async function CertificationsPage() {
+  const [definitions, certs, pending, agents, org] = await Promise.all([
+    listCertificationDefinitions(),
+    listAgentCertifications(),
+    listPendingApprovals(),
+    listAgents(),
+    getCurrentOrganization(),
+  ]);
+
+  const isAdmin = org?.role === "org_admin";
+  const canRequest = org?.role !== "viewer";
+
   return (
     <>
       <DashboardHeader
@@ -21,76 +30,45 @@ export default function CertificationsPage() {
         description="Digital certificates, expiry tracking, and approval workflows"
       />
       <div className="flex-1 space-y-8 overflow-y-auto p-4 sm:p-8">
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-          {demoCertifications.map((c) => (
+        <ApproverInbox pending={pending} isAdmin={isAdmin ?? false} />
+
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          {definitions.map((c) => (
             <Card key={c.id} className="transition-shadow duration-200 hover:shadow-md">
               <CardHeader className="pb-2">
                 <CardTitle className="text-sm">{c.name}</CardTitle>
               </CardHeader>
-              <CardContent className="text-xs text-muted-foreground">
-                Valid {c.validity_days} days
+              <CardContent className="space-y-1 text-xs text-muted-foreground">
+                <p>Valid {c.validity_days} days</p>
+                <p>
+                  Rules: {c.rules.min_scenario_passes ?? 1} scenario pass
+                  {c.rules.require_onboarding_complete ? " · onboarding complete" : ""}
+                </p>
               </CardContent>
             </Card>
           ))}
         </div>
 
+        <RequestCertificationForm
+          agents={agents}
+          definitions={definitions}
+          canRequest={canRequest ?? false}
+        />
+
         <Card className="overflow-x-auto">
           <CardHeader>
-            <CardTitle>Issued certificates</CardTitle>
+            <CardTitle>Certificate registry</CardTitle>
           </CardHeader>
           <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Agent</TableHead>
-                  <TableHead>Certification</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Earned</TableHead>
-                  <TableHead>Expires</TableHead>
-                  <TableHead>Certificate #</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {demoAgentCerts.map((ac) => (
-                  <TableRow key={ac.id}>
-                    <TableCell className="font-medium">{ac.agent_name}</TableCell>
-                    <TableCell>{ac.certification_name}</TableCell>
-                    <TableCell>
-                      <Badge
-                        className={cn(
-                          "capitalize",
-                          ac.status === "certified"
-                            ? "bg-info-subtle text-info"
-                            : "bg-destructive-subtle text-destructive"
-                        )}
-                      >
-                        {ac.status}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>
-                      {ac.earned_at
-                        ? format(new Date(ac.earned_at), "dd MMM yyyy")
-                        : "—"}
-                    </TableCell>
-                    <TableCell>
-                      {ac.expires_at
-                        ? format(new Date(ac.expires_at), "dd MMM yyyy")
-                        : "—"}
-                    </TableCell>
-                    <TableCell className="font-mono text-xs">
-                      {ac.certificate_number}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+            <CertificationsTable certs={certs} />
           </CardContent>
         </Card>
 
         <Card className="bg-muted">
           <CardContent className="pt-6 text-sm text-muted-foreground">
-            <strong className="text-foreground">Certification rules:</strong> Complete training → Pass assessments
-            → Pass scenario tests → Human approval → Digital certificate issued.
+            <strong className="text-foreground">Certification rules:</strong> Complete training →
+            Pass scenario tests → Request certification → Org admin approves → Digital
+            certificate issued with expiry tracking.
           </CardContent>
         </Card>
       </div>

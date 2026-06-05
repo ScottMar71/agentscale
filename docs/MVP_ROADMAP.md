@@ -12,33 +12,33 @@ Ship a **demo-ready, pilot-capable** platform: registry, onboarding, academy, sc
 - [x] Supabase Auth (email/password + magic link)
 - [x] Org creation on first sign-up (`/setup` + `create_organization` RPC)
 - [ ] Org invite flow
-- [ ] Replace demo data with live Supabase queries (agents, onboarding, academy done; scenarios/certs pending)
+- [ ] Replace demo data with live Supabase queries (agents, onboarding, academy, scenarios done; certs/dashboard pending)
 
 ## Phase 2 — Core Modules (Weeks 3–5)
 
 - [x] Agent Registry CRUD + search/filters (URL params + Supabase with demo fallback)
 - [x] Onboarding checklist (read/write progress, toggle items)
 - [x] Training programmes + modules CRUD + storage upload + assign to agent
-- [ ] Scenario library + run history
-- [ ] OpenAI evaluation wired to DB
-- [ ] Certification issue + expiry jobs
+- [x] Scenario library + run history (CRUD, run UI, persist `scenario_runs`)
+- [x] OpenAI evaluation wired to DB (`/api/evaluate` + server actions)
+- [x] Certification request + approver inbox + expiry cron
 
 ## Phase 3 — Enterprise (Weeks 6–8)
 
-- [ ] Governance audit log (auto-write on changes)
+- [x] Governance centre with live audit log + export
 - [ ] Version control + rollback
 - [ ] Performance snapshots (manual import or webhook)
 - [ ] Incident → reassessment workflow
-- [ ] Stripe checkout + webhook → plan limits
-- [ ] Agent limit enforcement per plan
+- [x] Stripe checkout + Customer Portal + webhook → plan limits
+- [x] Agent limit enforcement per plan
 
 ## Phase 4 — Pilot Hardening (Weeks 9–12)
 
 - [ ] Role-based UI (hide write actions for Viewer)
 - [ ] Super Admin org management
 - [ ] Export audit pack (PDF)
-- [ ] E2E tests (Playwright)
-- [ ] Vercel production deploy + monitoring
+- [x] E2E smoke tests (Playwright)
+- [ ] Vercel production deploy + monitoring (Sentry DSN optional)
 
 ## MVP Definition of Done
 

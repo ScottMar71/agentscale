@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getStripe, planFromPriceId } from "@/lib/stripe";
+import { agentLimitForPlan, type SubscriptionPlan } from "@/lib/billing/plans";
 import { createClient } from "@supabase/supabase-js";
 import type Stripe from "stripe";
 
@@ -37,10 +38,12 @@ export async function POST(request: Request) {
     const orgId = session.metadata?.organizationId;
     const plan = session.metadata?.plan;
     if (supabase && orgId && plan) {
+      const typedPlan = plan as SubscriptionPlan;
       await supabase
         .from("organizations")
         .update({
-          plan,
+          plan: typedPlan,
+          agent_limit: agentLimitForPlan(typedPlan),
           stripe_customer_id: session.customer as string,
           stripe_subscription_id: session.subscription as string,
         })
@@ -56,7 +59,11 @@ export async function POST(request: Request) {
     if (plan) {
       await supabase
         .from("organizations")
-        .update({ plan, stripe_subscription_id: sub.id })
+        .update({
+          plan,
+          agent_limit: agentLimitForPlan(plan),
+          stripe_subscription_id: sub.id,
+        })
         .eq("stripe_customer_id", customerId);
     }
   }

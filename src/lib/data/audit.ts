@@ -2,7 +2,14 @@ import { createClient } from "@/lib/supabase/server";
 import { isAuthEnabled } from "@/lib/auth/config";
 import type { AuditLogEntry } from "@/types";
 
-type AuditAction = "create" | "update" | "delete";
+type AuditAction =
+  | "create"
+  | "update"
+  | "delete"
+  | "certify"
+  | "approve"
+  | "reject"
+  | "revoke";
 
 export async function writeAuditLog(params: {
   organizationId: string;

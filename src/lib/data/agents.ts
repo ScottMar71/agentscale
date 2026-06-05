@@ -167,6 +167,12 @@ export async function insertAgent(
   payload: AgentUpsertPayload,
   ownerId: string | null
 ): Promise<{ agent: Agent | null; error?: string }> {
+  const { checkAgentCreateAllowed } = await import("@/lib/data/organization");
+  const limitCheck = await checkAgentCreateAllowed(organizationId);
+  if (!limitCheck.allowed) {
+    return { agent: null, error: limitCheck.message };
+  }
+
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("agents")

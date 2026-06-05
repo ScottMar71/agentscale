@@ -14,6 +14,7 @@ import {
   RefreshCw,
   Shield,
   Settings,
+  Sparkles,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Logo } from "@/components/brand/logo";
@@ -84,8 +85,9 @@ export function SidebarNav({
         {links.map((link) => {
           const Icon = iconMap[link.icon];
           const active =
-            pathname === link.href ||
-            (link.href !== "/dashboard" && pathname.startsWith(link.href));
+            link.href === "/dashboard"
+              ? pathname === "/dashboard"
+              : pathname === link.href || pathname.startsWith(`${link.href}/`);
           return (
             <li key={link.href}>
               <Link
@@ -107,7 +109,22 @@ export function SidebarNav({
           );
         })}
       </ul>
-      <div className="border-t border-white/10 px-3 py-4">
+      <div className="space-y-0.5 border-t border-white/10 px-3 py-4">
+        <Link
+          href="/dashboard/demo"
+          onClick={onNavigate}
+          aria-current={pathname === "/dashboard/demo" ? "page" : undefined}
+          className={cn(
+            "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium outline-none transition-colors duration-200",
+            "focus-visible:ring-2 focus-visible:ring-brand-accent",
+            pathname === "/dashboard/demo"
+              ? "bg-primary text-primary-foreground shadow-sm"
+              : "text-brand-foreground/70 hover:bg-white/5 hover:text-brand-foreground"
+          )}
+        >
+          <Sparkles className="h-4 w-4" aria-hidden />
+          Demo dashboard
+        </Link>
         <Link
           href="/dashboard/settings"
           onClick={onNavigate}

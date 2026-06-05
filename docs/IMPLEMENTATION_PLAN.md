@@ -21,19 +21,19 @@
 12. Module content upload → Supabase Storage
 13. Assign programme to agent
 
-### Sprint 4 — Scenario engine
+### Sprint 4 — Scenario engine ✅
 14. Scenario CRUD UI
 15. Run scenario UI (paste agent response or call external agent webhook)
 16. Persist `scenario_runs` after `/api/evaluate`
-17. Pass/fail gate for certification rules
+17. Pass/fail gate for certification rules (onboarding checklist on pass)
 
-### Sprint 5 — Certifications & governance
+### Sprint 5 — Certifications & governance ✅
 18. Certification request workflow + approver inbox
-19. PDF audit export (react-pdf or external service)
-20. Auto-expire certs cron (Edge Function)
+19. Audit pack export (downloadable text report)
+20. Auto-expire certs cron (Vercel Cron + service role)
 21. Governance dashboard from live aggregates
 
-### Sprint 6 — Billing & production
+### Sprint 6 — Billing & production ✅
 22. Stripe Customer Portal
 23. Enforce `agent_limit` on create
 24. Sentry + Vercel Analytics
