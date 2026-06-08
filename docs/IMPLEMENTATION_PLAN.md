@@ -2,14 +2,14 @@
 
 ## Ordered tasks (granular)
 
-### Sprint 1 — Auth & tenancy
+### Sprint 1 — Auth & tenancy ✅
 1. Enable Supabase Auth (email/password + magic link)
 2. `src/app/auth/callback/route.ts` for OAuth callback
 3. Server-side session in dashboard layout; redirect unauthenticated users
 4. `createOrganization` server action + seed first member as `org_admin`
 5. Org switcher in header (multi-org users)
 
-### Sprint 2 — Agent Registry (live data)
+### Sprint 2 — Agent Registry (live data) ✅
 6. `src/lib/data/agents.ts` — Supabase queries with fallback to demo
 7. Agent create/edit forms with Zod validation
 8. Wire filters to URL search params
@@ -50,6 +50,11 @@
 31. Version control + rollback (live `agent_versions`)
 32. Incident → reassessment workflow (auto-create scenario)
 33. PDF audit pack export
+
+### Sprint 9 — Pilot hardening ✅
+34. Add social OAuth providers (Google/GitHub)
+35. Playwright E2E: landing → dashboard → agent detail
+36. Production deploy verification (Vercel + Sentry DSN)
 
 ## Testing approach
 

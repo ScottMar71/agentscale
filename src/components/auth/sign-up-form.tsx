@@ -6,6 +6,8 @@ import { signUpWithPassword, type AuthActionState } from "@/app/actions/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
+import { OAuthButtons } from "@/components/auth/oauth-buttons";
 
 const initial: AuthActionState = {};
 
@@ -13,6 +15,14 @@ export function SignUpForm({ defaultEmail }: { defaultEmail?: string }) {
   const [state, action, pending] = useActionState(signUpWithPassword, initial);
 
   return (
+    <div className="space-y-6">
+      <OAuthButtons next="/setup" />
+      <div className="relative">
+        <Separator />
+        <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-card px-2 text-xs text-muted-foreground">
+          or
+        </span>
+      </div>
     <form action={action} className="space-y-4">
       <div className="space-y-1.5">
         <Label htmlFor="fullName">Full name</Label>
@@ -62,5 +72,6 @@ export function SignUpForm({ defaultEmail }: { defaultEmail?: string }) {
         </Link>
       </p>
     </form>
+    </div>
   );
 }

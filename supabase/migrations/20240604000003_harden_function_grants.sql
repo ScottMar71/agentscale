@@ -1,5 +1,6 @@
--- Revoke direct RPC access to helper SECURITY DEFINER functions.
--- RLS policies still invoke them internally; only create_organization stays callable.
+-- Revoke direct RPC access to helper SECURITY DEFINER functions from PUBLIC/anon.
+-- Note: authenticated must retain EXECUTE — RLS policies call these functions and
+-- PostgreSQL requires EXECUTE on the invoker. See fix_rls_helper_grants migration.
 
 REVOKE ALL ON FUNCTION public.user_organization_ids() FROM PUBLIC;
 REVOKE ALL ON FUNCTION public.user_org_role(UUID) FROM PUBLIC;

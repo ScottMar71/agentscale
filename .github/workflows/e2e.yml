@@ -30,8 +30,9 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install chromium --with-deps
 
-      - name: Run E2E tests
+      - name: Run E2E tests against production
         env:
+          PLAYWRIGHT_BASE_URL: https://agentscale.vercel.app
           # Optional — enables authenticated pilot journey when all are set
           PLAYWRIGHT_TEST_EMAIL: ${{ secrets.PLAYWRIGHT_TEST_EMAIL }}
           PLAYWRIGHT_TEST_PASSWORD: ${{ secrets.PLAYWRIGHT_TEST_PASSWORD }}

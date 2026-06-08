@@ -2,15 +2,13 @@
 
 Playwright runs on every push to `main` and on pull requests.
 
-## What runs in CI (no secrets)
+## What runs in CI
 
-Without Supabase env vars, the app runs in **demo mode**:
+E2E tests run against **production** (`PLAYWRIGHT_BASE_URL=https://agentscale.vercel.app`) — no local dev server needed.
 
-- Landing, login, pricing smoke tests
-- Health check (`GET /api/health`)
-- Demo-mode banner test (when auth is disabled)
+Without Supabase secrets, smoke + health tests still run; authenticated journey is skipped.
 
-## Optional secrets (authenticated pilot journey)
+## Required secrets (authenticated pilot journey)
 
 Add in **GitHub → Settings → Secrets and variables → Actions**:
 
@@ -22,6 +20,14 @@ Add in **GitHub → Settings → Secrets and variables → Actions**:
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon key |
 
 When all four are set, CI also runs the authenticated pilot journey (login → dashboard → registry).
+
+## Production validation
+
+```bash
+npm run verify:production   # health, routes, Sentry, auth guard
+npm run validate:mvp        # MVP DoD route checks
+PLAYWRIGHT_BASE_URL=https://agentscale.vercel.app npm run test:e2e
+```
 
 ## Local run
 

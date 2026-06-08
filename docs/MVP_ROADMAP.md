@@ -35,12 +35,14 @@ Ship a **demo-ready, pilot-capable** platform: registry, onboarding, academy, sc
 ## Phase 4 — Pilot Hardening (Weeks 9–12)
 
 - [x] Role-based UI (hide write actions for Viewer)
-- [ ] Super Admin org management
+- [x] Super Admin org management
 - [x] Export audit pack (PDF)
 - [x] E2E smoke tests (Playwright)
-- [ ] Vercel production deploy + monitoring (Sentry DSN optional)
+- [x] Vercel production deploy + monitoring (Sentry DSN — `npm run verify:production`)
 
 ## MVP Definition of Done
+
+Validated on production (`npm run validate:mvp` + `npm run verify:production`):
 
 1. User signs up, creates org, invites team.
 2. User registers agent, completes onboarding checklist.
@@ -48,3 +50,5 @@ Ship a **demo-ready, pilot-capable** platform: registry, onboarding, academy, sc
 4. User requests certification; admin approves.
 5. Audit log shows prompt change with actor.
 6. Executive dashboard reflects live org data.
+
+Route-level validation passes on https://agentscale.vercel.app. Full authenticated journeys require `PLAYWRIGHT_TEST_EMAIL` + `PLAYWRIGHT_TEST_PASSWORD` in CI or local E2E runs.

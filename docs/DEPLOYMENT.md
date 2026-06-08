@@ -75,6 +75,8 @@ Project → Settings → Environment Variables. Add for **Production**, **Previe
 | `RESEND_API_KEY` | Contact form |
 | `RESEND_FROM_EMAIL` | Verified sender |
 | `CONTACT_EMAIL` | Inbox for demo requests |
+| `SENTRY_DSN` | Server-side error monitoring |
+| `NEXT_PUBLIC_SENTRY_DSN` | Client-side error monitoring |
 
 After adding vars in Vercel:
 
@@ -107,11 +109,24 @@ vercel --prod   # redeploy after adding secrets
 **Live:** https://agentscale.vercel.app
 
 ```bash
+npm run verify:production
 vercel ls
 curl -I https://agentscale.vercel.app
 ```
 
 Open `/dashboard` for the product UI and `/` for the landing page.
+
+### Sentry verification
+
+1. Confirm `SENTRY_DSN` and `NEXT_PUBLIC_SENTRY_DSN` are set in Vercel (see `/api/health` → `checks.sentry`).
+2. Open `https://agentscale.vercel.app/sentry-example-page` and trigger a test error.
+3. Confirm the event appears in the [Sentry dashboard](https://agentscale.sentry.io).
+
+### Supabase OAuth (Google / GitHub)
+
+1. Supabase → Authentication → Providers → enable Google and GitHub.
+2. Auth → URL configuration → add redirect URL: `https://agentscale.vercel.app/auth/callback`
+3. Configure OAuth apps in Google Cloud Console / GitHub Developer Settings with the same callback URL.
 
 ## Current project (already linked)
 

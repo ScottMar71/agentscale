@@ -26,6 +26,10 @@ test.describe("Pilot journey (demo mode)", () => {
     await expect(page.getByRole("heading", { name: /Agent Registry/i })).toBeVisible();
     await expect(page.locator("body")).toContainText(/agent/i);
 
+    await page.getByRole("link", { name: "View Sales SDR Agent" }).click();
+    await expect(page.getByText("Agent profile")).toBeVisible();
+    await expect(page.getByText("Back to registry")).toBeVisible();
+
     await page.getByRole("link", { name: "Scenario Testing" }).click();
     await expect(page.getByRole("heading", { name: /Scenario Testing/i })).toBeVisible();
 
@@ -55,7 +59,10 @@ test.describe("Pilot journey (authenticated)", () => {
 
   test.skip(!email || !password, "Set PLAYWRIGHT_TEST_EMAIL and PLAYWRIGHT_TEST_PASSWORD");
 
-  test("login → executive dashboard → agent registry", async ({ page }) => {
+  test("landing → login → dashboard → agent detail", async ({ page }) => {
+    await page.goto("/", { waitUntil: "domcontentloaded" });
+    await expect(page.locator("body")).toContainText("AgentScale");
+
     await page.goto("/login", { waitUntil: "domcontentloaded" });
     await page.getByLabel(/email/i).fill(email!);
     await page.getByLabel(/password/i).fill(password!);
@@ -66,6 +73,26 @@ test.describe("Pilot journey (authenticated)", () => {
 
     await page.getByRole("link", { name: "Agent Registry" }).click();
     await expect(page.getByRole("heading", { name: /Agent Registry/i })).toBeVisible();
+
+    const agentLink = page.getByRole("link", { name: /^View / }).first();
+    await agentLink.click();
+    await expect(page.getByText("Agent profile")).toBeVisible();
+    await expect(page.getByText("Back to registry")).toBeVisible();
+  });
+});
+
+test.describe("OAuth sign-in", () => {
+  test("login page shows Google and GitHub options", async ({ page }) => {
+    await page.goto("/login", { waitUntil: "domcontentloaded" });
+
+    const demoFallback = page.getByRole("link", { name: /Continue in demo mode/i });
+    if (await demoFallback.isVisible()) {
+      test.skip(true, "Auth disabled — OAuth buttons not shown");
+      return;
+    }
+
+    await expect(page.getByRole("button", { name: "Continue with Google" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Continue with GitHub" })).toBeVisible();
   });
 });
 

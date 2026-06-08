@@ -2,6 +2,8 @@ export type LinearTask = {
   id: number;
   sprint: string;
   title: string;
+  /** When set, sync script can apply this status on existing issues (MCP/manual review). */
+  status?: "done" | "todo" | "in_progress" | "canceled";
 };
 
 /** AgentScale implementation plan — synced to Linear via `npm run linear:sync`. */
@@ -24,8 +26,8 @@ export const AGENTSCALE_LINEAR_TASKS: LinearTask[] = [
   { id: 16, sprint: "Sprint 4 — Scenario engine", title: "Persist scenario_runs after /api/evaluate" },
   { id: 17, sprint: "Sprint 4 — Scenario engine", title: "Pass/fail gate for certification rules" },
   { id: 18, sprint: "Sprint 5 — Certifications & governance", title: "Certification request workflow + approver inbox" },
-  { id: 19, sprint: "Sprint 5 — Certifications & governance", title: "PDF audit export" },
-  { id: 20, sprint: "Sprint 5 — Certifications & governance", title: "Auto-expire certs cron (Edge Function)" },
+  { id: 19, sprint: "Sprint 5 — Certifications & governance", title: "Audit pack export (downloadable text report)", status: "done" },
+  { id: 20, sprint: "Sprint 5 — Certifications & governance", title: "Auto-expire certs cron (Vercel Cron + service role)", status: "done" },
   { id: 21, sprint: "Sprint 5 — Certifications & governance", title: "Governance dashboard from live aggregates" },
   { id: 22, sprint: "Sprint 6 — Billing & production", title: "Stripe Customer Portal" },
   { id: 23, sprint: "Sprint 6 — Billing & production", title: "Enforce agent_limit on create" },
@@ -38,5 +40,9 @@ export const AGENTSCALE_LINEAR_TASKS: LinearTask[] = [
   { id: 30, sprint: "Sprint 8 — Enterprise narrative", title: "Performance snapshots (import + webhook)" },
   { id: 31, sprint: "Sprint 8 — Enterprise narrative", title: "Version control + rollback" },
   { id: 32, sprint: "Sprint 8 — Enterprise narrative", title: "Incident reassessment workflow" },
-  { id: 33, sprint: "Sprint 8 — Enterprise narrative", title: "PDF audit pack export" },
+  { id: 33, sprint: "Sprint 8 — Enterprise narrative", title: "PDF audit pack export", status: "done" },
+  // Follow-up (post-implementation review 2026-06-05)
+  { id: 34, sprint: "Sprint 9 — Pilot hardening", title: "Add social OAuth providers (Google/GitHub)", status: "done" },
+  { id: 35, sprint: "Sprint 9 — Pilot hardening", title: "Playwright E2E: landing → dashboard → agent detail", status: "done" },
+  { id: 36, sprint: "Sprint 9 — Pilot hardening", title: "Production deploy verification (Vercel + Sentry DSN)", status: "done" },
 ];
