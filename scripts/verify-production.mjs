@@ -2,10 +2,10 @@
 /**
  * Verify production deployment health and key routes.
  * Usage: npm run verify:production
- *        VERIFY_URL=https://agentscale.vercel.app node scripts/verify-production.mjs
+ *        VERIFY_URL=https://www.agentscale.info node scripts/verify-production.mjs
  */
 
-const BASE_URL = (process.env.VERIFY_URL ?? "https://agentscale.vercel.app").replace(/\/$/, "");
+const BASE_URL = (process.env.VERIFY_URL ?? "https://www.agentscale.info").replace(/\/$/, "");
 
 const checks = [];
 let failed = 0;

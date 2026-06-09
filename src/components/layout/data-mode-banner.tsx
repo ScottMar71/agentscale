@@ -11,7 +11,7 @@ interface DataModeBannerProps {
   organizationName?: string | null;
 }
 
-export function DataModeBanner({ authEnabled, organizationName }: DataModeBannerProps) {
+export function DataModeBanner({ authEnabled }: DataModeBannerProps) {
   const pathname = usePathname();
   const onDemoRoute = pathname === "/dashboard/demo";
 

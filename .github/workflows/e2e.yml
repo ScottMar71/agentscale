@@ -32,7 +32,7 @@ jobs:
 
       - name: Run E2E tests against production
         env:
-          PLAYWRIGHT_BASE_URL: https://agentscale.vercel.app
+          PLAYWRIGHT_BASE_URL: https://www.agentscale.info
           # Optional — enables authenticated pilot journey when all are set
           PLAYWRIGHT_TEST_EMAIL: ${{ secrets.PLAYWRIGHT_TEST_EMAIL }}
           PLAYWRIGHT_TEST_PASSWORD: ${{ secrets.PLAYWRIGHT_TEST_PASSWORD }}

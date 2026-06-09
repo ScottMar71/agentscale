@@ -8,7 +8,7 @@ Enterprise AI Workforce Management Platform — onboard, train, certify, govern,
 
 | Layer | Technology |
 |-------|------------|
-| Frontend | Next.js 15, React, TypeScript, Tailwind CSS, shadcn/ui |
+| Frontend | Next.js 16, React, TypeScript, Tailwind CSS, shadcn/ui |
 | Backend | Supabase (Auth, PostgreSQL, RLS) |
 | Payments | Stripe |
 | Email | Resend |
@@ -17,7 +17,7 @@ Enterprise AI Workforce Management Platform — onboard, train, certify, govern,
 
 ## Deployed on Vercel
 
-- **Production:** https://agentscale.vercel.app
+- **Production:** https://www.agentscale.info
 - **Dashboard:** https://vercel.com/qfjcfc82cq-6912s-projects/agentscale
 
 See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for GitHub + env variable setup.

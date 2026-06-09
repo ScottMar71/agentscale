@@ -9,7 +9,7 @@ export type LinearTask = {
 /** AgentScale implementation plan — synced to Linear via `npm run linear:sync`. */
 export const AGENTSCALE_LINEAR_TASKS: LinearTask[] = [
   { id: 1, sprint: "Sprint 1 — Auth & tenancy", title: "Enable Supabase Auth (email/password + magic link)" },
-  { id: 2, sprint: "Sprint 1 — Auth & tenancy", title: "Add auth callback route for OAuth" },
+  { id: 2, sprint: "Sprint 1 — Auth & tenancy", title: "Add auth callback route for PKCE/magic link", status: "done" },
   { id: 3, sprint: "Sprint 1 — Auth & tenancy", title: "Server-side session in dashboard layout; redirect unauthenticated users" },
   { id: 4, sprint: "Sprint 1 — Auth & tenancy", title: "createOrganization server action + seed first member as org_admin" },
   { id: 5, sprint: "Sprint 1 — Auth & tenancy", title: "Org switcher in header (multi-org users)" },
@@ -42,7 +42,7 @@ export const AGENTSCALE_LINEAR_TASKS: LinearTask[] = [
   { id: 32, sprint: "Sprint 8 — Enterprise narrative", title: "Incident reassessment workflow" },
   { id: 33, sprint: "Sprint 8 — Enterprise narrative", title: "PDF audit pack export", status: "done" },
   // Follow-up (post-implementation review 2026-06-05)
-  { id: 34, sprint: "Sprint 9 — Pilot hardening", title: "Add social OAuth providers (Google/GitHub)", status: "done" },
   { id: 35, sprint: "Sprint 9 — Pilot hardening", title: "Playwright E2E: landing → dashboard → agent detail", status: "done" },
   { id: 36, sprint: "Sprint 9 — Pilot hardening", title: "Production deploy verification (Vercel + Sentry DSN)", status: "done" },
+  { id: 37, sprint: "Sprint 9 — Pilot hardening", title: "Provision E2E test user (provision:e2e-user)", status: "done" },
 ];

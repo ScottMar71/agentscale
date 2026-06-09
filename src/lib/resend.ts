@@ -12,7 +12,7 @@ export async function sendContactNotification(data: {
   message?: string;
 }) {
   const resend = getResend();
-  const to = process.env.CONTACT_EMAIL ?? "hello@agentscale.io";
+  const to = process.env.CONTACT_EMAIL ?? "hello@agentscale.info";
   const from = process.env.RESEND_FROM_EMAIL ?? "AgentScale <onboarding@resend.dev>";
 
   if (!resend) {

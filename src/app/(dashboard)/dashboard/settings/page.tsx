@@ -3,13 +3,12 @@ import { ConnectionStatusPanel } from "@/components/settings/connection-status";
 import { BillingPanel } from "@/components/settings/billing-panel";
 import { TeamPanel } from "@/components/settings/team-panel";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { signOut } from "@/app/actions/auth";
+import { SignOutButton } from "@/components/auth/sign-out-button";
 import { getCurrentOrganization, getAuthUser } from "@/lib/auth/session";
 import { getOrganizationBilling } from "@/lib/data/organization";
 import { listPendingInvites, listTeamMembers } from "@/lib/data/team";
 import { isAuthEnabled } from "@/lib/auth/config";
 import { isOrgAdmin } from "@/lib/auth/permissions";
-import { Button } from "@/components/ui/button";
 
 export default async function SettingsPage({
   searchParams,
@@ -79,13 +78,7 @@ export default async function SettingsPage({
           />
         )}
 
-        {authOn && user && (
-          <form action={signOut}>
-            <Button type="submit" variant="outline">
-              Sign out
-            </Button>
-          </form>
-        )}
+        {authOn && user && <SignOutButton />}
         <ConnectionStatusPanel />
         <Card>
           <CardHeader>

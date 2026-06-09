@@ -4,7 +4,8 @@
 
 | Service | URL |
 |---------|-----|
-| **App** | https://agentscale.vercel.app |
+| **App** | https://www.agentscale.info |
+| **Vercel fallback** | https://agentscale.vercel.app |
 | **Vercel project** | https://vercel.com/qfjcfc82cq-6912s-projects/agentscale |
 
 ## How services connect
@@ -55,8 +56,8 @@ Local keys live in `.env.local`. For production, add the same vars in Vercel (or
 
 **Auth redirect URLs** (Supabase → Authentication → URL configuration):
 
-- Site URL: `http://localhost:3000` (dev) and `https://agentscale.vercel.app` (prod)
-- Redirect URLs: `http://localhost:3000/auth/callback`, `https://agentscale.vercel.app/auth/callback`
+- Site URL: `http://localhost:3000` (dev) and `https://www.agentscale.info` (prod)
+- Redirect URLs: `http://localhost:3000/auth/callback`, `https://www.agentscale.info/auth/callback`, `https://agentscale.vercel.app/auth/callback` (legacy)
 
 Add `SUPABASE_SERVICE_ROLE_KEY` from Project Settings → API (server-only; Stripe webhooks).
 

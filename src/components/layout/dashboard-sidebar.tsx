@@ -18,12 +18,14 @@ import {
   ShieldEllipsis,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { NAV_ITEMS, type NavIconName } from "@/lib/constants";
 import { Logo } from "@/components/brand/logo";
+import { SignOutNavItem } from "@/components/auth/sign-out-button";
 import { OrgSwitcher } from "@/components/layout/org-switcher";
 import { DataModeIndicator } from "@/components/layout/data-mode-banner";
 import type { UserOrganization } from "@/lib/auth/session";
 
-const iconMap = {
+const iconMap: Record<NavIconName, typeof LayoutDashboard> = {
   LayoutDashboard,
   Bot,
   ClipboardCheck,
@@ -34,20 +36,7 @@ const iconMap = {
   Shield,
   GitBranch,
   RefreshCw,
-} as const;
-
-const links = [
-  { href: "/dashboard", label: "Executive", icon: "LayoutDashboard" as const },
-  { href: "/dashboard/agents", label: "Agent Registry", icon: "Bot" as const },
-  { href: "/dashboard/onboarding", label: "Onboarding", icon: "ClipboardCheck" as const },
-  { href: "/dashboard/academy", label: "Training Academy", icon: "GraduationCap" as const },
-  { href: "/dashboard/scenarios", label: "Scenario Testing", icon: "FlaskConical" as const },
-  { href: "/dashboard/certifications", label: "Certifications", icon: "Award" as const },
-  { href: "/dashboard/performance", label: "Performance", icon: "BarChart3" as const },
-  { href: "/dashboard/governance", label: "Governance", icon: "Shield" as const },
-  { href: "/dashboard/versions", label: "Version Control", icon: "GitBranch" as const },
-  { href: "/dashboard/incidents", label: "Improvement", icon: "RefreshCw" as const },
-];
+};
 
 /** Shared nav body used by both the desktop sidebar and the mobile sheet. */
 export function SidebarNav({
@@ -94,7 +83,7 @@ export function SidebarNav({
         )}
       </div>
       <ul className="flex-1 space-y-0.5 overflow-y-auto px-3 py-4">
-        {links.map((link) => {
+        {NAV_ITEMS.map((link) => {
           const Icon = iconMap[link.icon];
           const active =
             link.href === "/dashboard"
@@ -162,6 +151,7 @@ export function SidebarNav({
           <Settings className="h-4 w-4" aria-hidden />
           Settings
         </Link>
+        {authEnabled && <SignOutNavItem onNavigate={onNavigate} />}
       </div>
     </nav>
   );

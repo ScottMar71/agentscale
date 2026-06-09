@@ -4,7 +4,7 @@
 
 ### Sprint 1 — Auth & tenancy ✅
 1. Enable Supabase Auth (email/password + magic link)
-2. `src/app/auth/callback/route.ts` for OAuth callback
+2. `src/app/auth/callback/route.ts` for PKCE/magic link callback
 3. Server-side session in dashboard layout; redirect unauthenticated users
 4. `createOrganization` server action + seed first member as `org_admin`
 5. Org switcher in header (multi-org users)
@@ -52,9 +52,8 @@
 33. PDF audit pack export
 
 ### Sprint 9 — Pilot hardening ✅
-34. Add social OAuth providers (Google/GitHub)
-35. Playwright E2E: landing → dashboard → agent detail
-36. Production deploy verification (Vercel + Sentry DSN)
+34. Playwright E2E: landing → dashboard → agent detail
+35. Production deploy verification (Vercel + Sentry DSN)
 
 ## Testing approach
 

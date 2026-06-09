@@ -305,6 +305,11 @@ export function LandingPage() {
       <footer className="border-t border-border px-6 py-10">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 sm:flex-row">
           <Logo wordmarkClassName="text-foreground" />
+          <nav aria-label="Legal" className="flex items-center gap-6 text-sm text-muted-foreground">
+            <Link href="/cookies" className="transition-colors hover:text-foreground">
+              Cookies
+            </Link>
+          </nav>
           <p className="text-sm text-muted-foreground">
             © {new Date().getFullYear()} {APP_NAME}. All rights reserved.
           </p>

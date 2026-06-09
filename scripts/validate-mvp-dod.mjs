@@ -7,7 +7,7 @@
  * Usage: npm run validate:mvp
  */
 
-const BASE_URL = (process.env.VERIFY_URL ?? "https://agentscale.vercel.app").replace(/\/$/, "");
+const BASE_URL = (process.env.VERIFY_URL ?? "https://www.agentscale.info").replace(/\/$/, "");
 
 const flows = [
   {

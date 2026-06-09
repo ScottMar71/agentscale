@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import {
   insertPerformanceSnapshotWithClient,
   type PerformanceSnapshotInput,
 } from "@/lib/data/performance";
+import { getServiceSupabase } from "@/lib/supabase/service";
 
 const webhookSchema = z.object({
   organization_id: z.string().uuid(),
@@ -21,13 +21,6 @@ const webhookSchema = z.object({
   avg_response_time_ms: z.number().int().min(0).optional(),
   health_score: z.number().int().min(0).max(100).optional(),
 });
-
-function getServiceSupabase(): SupabaseClient | null {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!url || !key) return null;
-  return createClient(url, key);
-}
 
 function authorize(request: Request): boolean {
   const secret = process.env.PERFORMANCE_WEBHOOK_SECRET ?? process.env.CRON_SECRET;

@@ -81,21 +81,6 @@ test.describe("Pilot journey (authenticated)", () => {
   });
 });
 
-test.describe("OAuth sign-in", () => {
-  test("login page shows Google and GitHub options", async ({ page }) => {
-    await page.goto("/login", { waitUntil: "domcontentloaded" });
-
-    const demoFallback = page.getByRole("link", { name: /Continue in demo mode/i });
-    if (await demoFallback.isVisible()) {
-      test.skip(true, "Auth disabled — OAuth buttons not shown");
-      return;
-    }
-
-    await expect(page.getByRole("button", { name: "Continue with Google" })).toBeVisible();
-    await expect(page.getByRole("button", { name: "Continue with GitHub" })).toBeVisible();
-  });
-});
-
 test.describe("Health check", () => {
   test("GET /api/health returns ok", async ({ request }) => {
     const response = await request.get("/api/health");

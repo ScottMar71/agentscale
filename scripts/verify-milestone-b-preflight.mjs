@@ -9,7 +9,7 @@ import { config } from "dotenv";
 
 config({ path: ".env.local" });
 
-const BASE_URL = (process.env.VERIFY_URL ?? "https://agentscale.vercel.app").replace(/\/$/, "");
+const BASE_URL = (process.env.VERIFY_URL ?? "https://www.agentscale.info").replace(/\/$/, "");
 const GITHUB_REPO = process.env.GITHUB_REPO ?? "ScottMar71/agentscale";
 
 const checks = [];
@@ -106,7 +106,7 @@ async function checkB3() {
     note(
       "B3",
       "Supabase redirect URLs",
-      "Confirm in Supabase Dashboard → Auth → URL config: https://agentscale.vercel.app/auth/callback"
+      "Confirm in Supabase Dashboard → Auth → URL config: https://www.agentscale.info/auth/callback"
     );
   } catch (err) {
     fail("B3", "Auth callback route", err.message);

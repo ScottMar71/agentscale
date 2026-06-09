@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { DashboardHeader } from "@/components/layout/dashboard-header";
-import { demoVersions } from "@/lib/demo-data";
 import { AgentTrainingPanel } from "@/components/academy/agent-training-panel";
 import { getAgentById } from "@/lib/data/agents";
 import { listAuditLogsForEntity } from "@/lib/data/audit";
 import { resolveDataContext } from "@/lib/data/context";
+import { listAgentVersions } from "@/lib/data/versions";
 import {
   listAgentTrainingAssignments,
   listTrainingPrograms,
@@ -29,8 +29,7 @@ export default async function AgentDetailPage({
   if (!agent) notFound();
 
   const { mode, organizationId } = await resolveDataContext();
-  const versions =
-    mode === "demo" ? demoVersions.filter((v) => v.agent_id === id) : [];
+  const { versions } = await listAgentVersions(id);
 
   const auditLogs =
     mode === "live" && organizationId

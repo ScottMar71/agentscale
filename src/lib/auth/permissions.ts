@@ -7,7 +7,3 @@ export function canWriteOrg(role: OrgRole | null | undefined): boolean {
 export function isOrgAdmin(role: OrgRole | null | undefined): boolean {
   return role === "org_admin";
 }
-
-export function isViewer(role: OrgRole | null | undefined): boolean {
-  return role === "viewer";
-}

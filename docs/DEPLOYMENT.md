@@ -63,7 +63,7 @@ Project → Settings → Environment Variables. Add for **Production**, **Previe
 
 | Variable | Notes |
 |----------|--------|
-| `NEXT_PUBLIC_APP_URL` | `https://your-domain.vercel.app` |
+| `NEXT_PUBLIC_APP_URL` | `https://www.agentscale.info` |
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase project URL |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anon key |
 | `SUPABASE_SERVICE_ROLE_KEY` | Server only — never expose to client |
@@ -91,7 +91,7 @@ vercel env pull .env.local
 1. Run `supabase/migrations/20240604000000_initial_schema.sql` in the SQL Editor.
 2. Optional: run `supabase/seed.sql`.
 3. Auth → URL configuration: add your Vercel URL to **Redirect URLs**.
-4. Stripe webhook URL: `https://your-app.vercel.app/api/stripe/webhook`
+4. Stripe webhook URL: `https://www.agentscale.info/api/stripe/webhook`
 
 ---
 
@@ -106,7 +106,7 @@ vercel --prod   # redeploy after adding secrets
 
 ## 6. Verify deployment
 
-**Live:** https://agentscale.vercel.app
+**Live:** https://www.agentscale.info
 
 ```bash
 npm run verify:production
@@ -119,14 +119,30 @@ Open `/dashboard` for the product UI and `/` for the landing page.
 ### Sentry verification
 
 1. Confirm `SENTRY_DSN` and `NEXT_PUBLIC_SENTRY_DSN` are set in Vercel (see `/api/health` → `checks.sentry`).
-2. Open `https://agentscale.vercel.app/sentry-example-page` and trigger a test error.
+2. Open `https://www.agentscale.info/sentry-example-page` and trigger a test error.
 3. Confirm the event appears in the [Sentry dashboard](https://agentscale.sentry.io).
 
-### Supabase OAuth (Google / GitHub)
+### Resend (agentscale.info)
 
-1. Supabase → Authentication → Providers → enable Google and GitHub.
-2. Auth → URL configuration → add redirect URL: `https://agentscale.vercel.app/auth/callback`
-3. Configure OAuth apps in Google Cloud Console / GitHub Developer Settings with the same callback URL.
+1. [resend.com/domains](https://resend.com/domains) → add **agentscale.info**
+2. Add DNS records at your registrar (SPF, DKIM; DMARC recommended)
+3. Set Vercel env:
+   - `RESEND_FROM_EMAIL` = `AgentScale <onboarding@agentscale.info>`
+   - `CONTACT_EMAIL` = `hello@agentscale.info`
+4. Redeploy, then run `npm run verify:milestone-b` — B4 should pass
+
+### Supabase Auth URLs
+
+Dashboard: [Auth URL configuration](https://supabase.com/dashboard/project/rffhcgakipfispuqbhpg/auth/url-configuration)
+
+- **Site URL:** `https://www.agentscale.info`
+- **Redirect URLs:** `https://www.agentscale.info/auth/callback`, `https://agentscale.vercel.app/auth/callback`, `http://localhost:3000/auth/callback`
+
+Or via CLI script (requires [access token](https://supabase.com/dashboard/account/tokens)):
+
+```bash
+SUPABASE_ACCESS_TOKEN=sbp_... npm run configure:supabase-auth
+```
 
 ## Current project (already linked)
 
@@ -134,5 +150,5 @@ Open `/dashboard` for the product UI and `/` for the landing page.
 |------|--------|
 | Vercel project | `agentscale` |
 | Team | MHSM's projects |
-| Production URL | https://agentscale.vercel.app |
+| Production URL | https://www.agentscale.info |
 | Vercel dashboard | https://vercel.com/qfjcfc82cq-6912s-projects/agentscale |

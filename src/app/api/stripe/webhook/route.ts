@@ -1,15 +1,8 @@
 import { NextResponse } from "next/server";
 import { getStripe, planFromPriceId } from "@/lib/stripe";
 import { agentLimitForPlan, type SubscriptionPlan } from "@/lib/billing/plans";
-import { createClient } from "@supabase/supabase-js";
 import type Stripe from "stripe";
-
-function getServiceSupabase() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  if (!url || !key) return null;
-  return createClient(url, key);
-}
+import { getServiceSupabase } from "@/lib/supabase/service";
 
 export async function POST(request: Request) {
   const stripe = getStripe();

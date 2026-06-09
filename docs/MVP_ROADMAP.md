@@ -51,4 +51,4 @@ Validated on production (`npm run validate:mvp` + `npm run verify:production`):
 5. Audit log shows prompt change with actor.
 6. Executive dashboard reflects live org data.
 
-Route-level validation passes on https://agentscale.vercel.app. Full authenticated journeys require `PLAYWRIGHT_TEST_EMAIL` + `PLAYWRIGHT_TEST_PASSWORD` in CI or local E2E runs.
+Route-level validation passes on https://www.agentscale.info. Full authenticated journeys require `PLAYWRIGHT_TEST_EMAIL` + `PLAYWRIGHT_TEST_PASSWORD` in CI or local E2E runs.

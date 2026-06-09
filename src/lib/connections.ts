@@ -20,7 +20,10 @@ export function getServiceConnections(): ServiceConnection[] {
   const supabaseOk = supabaseUrl && supabaseAnon;
 
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "";
-  const isProductionUrl = appUrl.includes("agentscale.vercel.app") || appUrl.includes("vercel.app");
+  const isProductionUrl =
+    appUrl.includes("agentscale.info") ||
+    appUrl.includes("agentscale.vercel.app") ||
+    appUrl.includes("vercel.app");
 
   return [
     {
@@ -29,7 +32,7 @@ export function getServiceConnections(): ServiceConnection[] {
       status: "connected",
       detail: isProductionUrl
         ? `Hosting — ${appUrl}`
-        : "Hosting — https://agentscale.vercel.app",
+        : "Hosting — https://www.agentscale.info",
       docsUrl: "https://vercel.com/qfjcfc82cq-6912s-projects/agentscale",
     },
     {
