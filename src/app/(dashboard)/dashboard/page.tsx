@@ -1,8 +1,13 @@
 import { ExecutiveDashboardView } from "@/components/dashboard/executive-dashboard-view";
-import { getLiveDashboardStats } from "@/lib/data/dashboard";
+import { getLiveDashboardStats, getPartnerSuccessMetrics } from "@/lib/data/dashboard";
 
 export default async function ExecutiveDashboardPage() {
-  const stats = await getLiveDashboardStats();
+  const [stats, partnerMetrics] = await Promise.all([
+    getLiveDashboardStats(),
+    getPartnerSuccessMetrics(),
+  ]);
 
-  return <ExecutiveDashboardView stats={stats} variant="live" />;
+  return (
+    <ExecutiveDashboardView stats={stats} partnerMetrics={partnerMetrics} variant="live" />
+  );
 }

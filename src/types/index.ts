@@ -160,6 +160,14 @@ export interface DashboardStats {
   estimatedSavings: number;
 }
 
+/** Design partner pilot success signals (live workspace only). */
+export interface PartnerSuccessMetrics {
+  daysSinceFirstAgent: number | null;
+  daysToFirstCert: number | null;
+  avgOnboardingPct: number;
+  scenarioPassRatePct: number | null;
+}
+
 export interface OnboardingRecord {
   id?: string;
   agent_id: string;

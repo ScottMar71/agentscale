@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { isAuthEnabled } from "@/lib/auth/config";
 import { getCurrentOrganizationId } from "@/lib/auth/session";
-import type { DashboardStats } from "@/types";
+import type { DashboardStats, PartnerSuccessMetrics } from "@/types";
 
 export function emptyDashboardStats(): DashboardStats {
   return {
@@ -81,5 +81,93 @@ export async function getLiveDashboardStats(): Promise<DashboardStats> {
     avgHealthScore,
     utilization,
     estimatedSavings: 0,
+  };
+}
+
+export function emptyPartnerSuccessMetrics(): PartnerSuccessMetrics {
+  return {
+    daysSinceFirstAgent: null,
+    daysToFirstCert: null,
+    avgOnboardingPct: 0,
+    scenarioPassRatePct: null,
+  };
+}
+
+/** Pilot success metrics for design partner programme tracking. */
+export async function getPartnerSuccessMetrics(): Promise<PartnerSuccessMetrics> {
+  if (!isAuthEnabled()) {
+    return emptyPartnerSuccessMetrics();
+  }
+
+  const organizationId = await getCurrentOrganizationId();
+  if (!organizationId) {
+    return emptyPartnerSuccessMetrics();
+  }
+
+  const supabase = await createClient();
+  const now = Date.now();
+  const dayMs = 86_400_000;
+
+  const { data: agents } = await supabase
+    .from("agents")
+    .select("created_at")
+    .eq("organization_id", organizationId)
+    .order("created_at", { ascending: true })
+    .limit(1);
+
+  const firstAgentAt = agents?.[0]?.created_at;
+  const daysSinceFirstAgent = firstAgentAt
+    ? Math.floor((now - new Date(firstAgentAt).getTime()) / dayMs)
+    : null;
+
+  const { data: firstCert } = await supabase
+    .from("agent_certifications")
+    .select("earned_at")
+    .eq("organization_id", organizationId)
+    .eq("status", "certified")
+    .not("earned_at", "is", null)
+    .order("earned_at", { ascending: true })
+    .limit(1);
+
+  const firstCertAt = firstCert?.[0]?.earned_at;
+  const daysToFirstCert =
+    firstAgentAt && firstCertAt
+      ? Math.floor(
+          (new Date(firstCertAt).getTime() - new Date(firstAgentAt).getTime()) / dayMs
+        )
+      : null;
+
+  const { data: onboardingRows } = await supabase
+    .from("agent_onboarding")
+    .select("progress_percent")
+    .eq("organization_id", organizationId);
+
+  const onboardingPcts = (onboardingRows ?? []).map((r) => r.progress_percent ?? 0);
+  const avgOnboardingPct =
+    onboardingPcts.length > 0
+      ? Math.round(onboardingPcts.reduce((a, b) => a + b, 0) / onboardingPcts.length)
+      : 0;
+
+  const thirtyDaysAgo = new Date();
+  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+  const { data: recentRuns } = await supabase
+    .from("scenario_runs")
+    .select("result")
+    .eq("organization_id", organizationId)
+    .gte("created_at", thirtyDaysAgo.toISOString())
+    .in("result", ["pass", "fail"]);
+
+  const runs = recentRuns ?? [];
+  const scenarioPassRatePct =
+    runs.length > 0
+      ? Math.round((runs.filter((r) => r.result === "pass").length / runs.length) * 100)
+      : null;
+
+  return {
+    daysSinceFirstAgent,
+    daysToFirstCert,
+    avgOnboardingPct,
+    scenarioPassRatePct,
   };
 }

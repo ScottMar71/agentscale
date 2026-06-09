@@ -169,7 +169,7 @@ async function checkB5() {
     note(
       "B5",
       "Sentry alert rule",
-      "Manual: Sentry → Alerts → New Issue → filter environment:production → notify email/Slack"
+      "Manual: docs/SENTRY_ALERTS.md — create alert with environment=production, test via /sentry-example-page"
     );
   } catch (err) {
     fail("B5", "Sentry ingestion route", err.message);

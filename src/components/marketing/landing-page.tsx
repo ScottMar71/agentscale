@@ -120,6 +120,30 @@ export function LandingPage() {
         </div>
       </section>
 
+      <section className="border-b border-border bg-muted/40 px-6 py-12" aria-label="Design partners">
+        <div className="mx-auto max-w-6xl text-center">
+          <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+            Design partner programme
+          </p>
+          <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground">
+            Onboarding regulated teams with 10+ production agents. Partner logos and case studies
+            publishing Q1 2026.
+          </p>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-8 opacity-60">
+            {["Financial services", "Healthcare", "Enterprise SaaS", "Insurance", "Legal AI"].map(
+              (segment) => (
+                <span
+                  key={segment}
+                  className="rounded-md border border-border bg-background px-4 py-2 text-xs font-medium text-muted-foreground"
+                >
+                  {segment}
+                </span>
+              )
+            )}
+          </div>
+        </div>
+      </section>
+
       <section className="px-6 py-20" id="problem">
         <div className="mx-auto max-w-6xl">
           <h2 className="text-center font-heading text-3xl font-semibold text-foreground">

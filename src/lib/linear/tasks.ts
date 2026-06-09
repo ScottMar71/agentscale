@@ -45,4 +45,27 @@ export const AGENTSCALE_LINEAR_TASKS: LinearTask[] = [
   { id: 35, sprint: "Sprint 9 — Pilot hardening", title: "Playwright E2E: landing → dashboard → agent detail", status: "done" },
   { id: 36, sprint: "Sprint 9 — Pilot hardening", title: "Production deploy verification (Vercel + Sentry DSN)", status: "done" },
   { id: 37, sprint: "Sprint 9 — Pilot hardening", title: "Provision E2E test user (provision:e2e-user)", status: "done" },
+  // Milestone B — partner onboarding pre-flight (Q1)
+  { id: 38, sprint: "Sprint 10 — Milestone B", title: "Add GitHub repo secrets for E2E CI (B1)" },
+  { id: 39, sprint: "Sprint 10 — Milestone B", title: "Confirm Supabase redirect URLs (B3)" },
+  { id: 40, sprint: "Sprint 10 — Milestone B", title: "Create Sentry alert rule for production (B5)" },
+  { id: 41, sprint: "Sprint 10 — Milestone B", title: "Run verify:milestone-b — all green" },
+  { id: 42, sprint: "Sprint 10 — Milestone B", title: "Update Features.md live vs demo status", status: "done" },
+  { id: 43, sprint: "Sprint 10 — Milestone B", title: "Add MILESTONE_B.md partner support runbook", status: "done" },
+  // Design partner programme (Q1 GTM Phase 1)
+  { id: 44, sprint: "Sprint 11 — Design partners", title: "Write partner onboarding playbook", status: "done" },
+  { id: 45, sprint: "Sprint 11 — Design partners", title: "Build pilot tenant seed script", status: "done" },
+  { id: 46, sprint: "Sprint 11 — Design partners", title: "Add npm run seed:pilot script", status: "done" },
+  { id: 47, sprint: "Sprint 11 — Design partners", title: "Partner success metrics view/dashboard widget", status: "done" },
+  { id: 48, sprint: "Sprint 11 — Design partners", title: "Case study template doc", status: "done" },
+  { id: 49, sprint: "Sprint 11 — Design partners", title: "Design partner outbound target list + outreach copy", status: "done" },
+  { id: 50, sprint: "Sprint 11 — Design partners", title: "Homepage social proof section placeholder", status: "done" },
+  // Q1 platform depth — Langfuse integration
+  { id: 51, sprint: "Sprint 12 — Langfuse", title: "DB migration: performance_traces table + RLS" },
+  { id: 52, sprint: "Sprint 12 — Langfuse", title: "Org settings: Langfuse API key storage" },
+  { id: 53, sprint: "Sprint 12 — Langfuse", title: "Webhook endpoint /api/integrations/langfuse/webhook" },
+  { id: 54, sprint: "Sprint 12 — Langfuse", title: "Performance UI: Langfuse-sourced metrics" },
+  { id: 55, sprint: "Sprint 12 — Langfuse", title: "Cron: periodic Langfuse sync" },
+  { id: 56, sprint: "Sprint 12 — Langfuse", title: "Docs: Langfuse setup guide" },
+  { id: 57, sprint: "Sprint 12 — Langfuse", title: "E2E: performance page with mock trace" },
 ];

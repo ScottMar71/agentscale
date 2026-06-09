@@ -14,13 +14,16 @@ import { ExecutiveCharts } from "@/components/dashboard/executive-charts";
 import { ExecutiveChartsLive } from "@/components/dashboard/executive-charts-live";
 import { Card, CardContent } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
-import type { DashboardStats } from "@/types";
+import { PartnerSuccessPanel } from "@/components/dashboard/partner-success-panel";
+import type { DashboardStats, PartnerSuccessMetrics } from "@/types";
 
 export function ExecutiveDashboardView({
   stats,
+  partnerMetrics,
   variant,
 }: {
   stats: DashboardStats;
+  partnerMetrics?: PartnerSuccessMetrics;
   variant: "live" | "demo";
 }) {
   const isDemo = variant === "demo";
@@ -83,6 +86,8 @@ export function ExecutiveDashboardView({
             </CardContent>
           </Card>
         )}
+
+        {!isDemo && partnerMetrics && <PartnerSuccessPanel metrics={partnerMetrics} />}
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
           <StatCard
