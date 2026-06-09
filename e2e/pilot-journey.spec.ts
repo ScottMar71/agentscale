@@ -63,9 +63,14 @@ test.describe("Pilot journey (authenticated)", () => {
     await page.goto("/", { waitUntil: "domcontentloaded" });
     await expect(page.locator("body")).toContainText("AgentScale");
 
+    const cookieAccept = page.getByRole("button", { name: /accept all/i });
+    if (await cookieAccept.isVisible()) {
+      await cookieAccept.click();
+    }
+
     await page.goto("/login", { waitUntil: "domcontentloaded" });
-    await page.getByLabel(/email/i).fill(email!);
-    await page.getByLabel(/password/i).fill(password!);
+    await page.locator("#email").fill(email!);
+    await page.locator("#password").fill(password!);
     await page.getByRole("button", { name: /sign in/i }).click();
 
     await page.waitForURL(/\/dashboard/, { timeout: 15_000 });
