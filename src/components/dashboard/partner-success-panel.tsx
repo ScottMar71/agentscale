@@ -1,5 +1,6 @@
 import { Calendar, CheckCircle2, ListChecks, Target } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { MetricHelpTrigger } from "@/components/help/metric-help-trigger";
 import type { PartnerSuccessMetrics } from "@/types";
 
 export function PartnerSuccessPanel({ metrics }: { metrics: PartnerSuccessMetrics }) {
@@ -27,6 +28,7 @@ export function PartnerSuccessPanel({ metrics }: { metrics: PartnerSuccessMetric
             <dt className="flex items-center gap-1.5 text-xs text-muted-foreground">
               <Calendar className="h-3.5 w-3.5" aria-hidden />
               Days since first agent
+              <MetricHelpTrigger helpId="pilot.days_since_first_agent" label="Days since first agent" />
             </dt>
             <dd className="mt-1 font-heading text-2xl font-semibold text-foreground">
               {metrics.daysSinceFirstAgent ?? "—"}
@@ -37,6 +39,7 @@ export function PartnerSuccessPanel({ metrics }: { metrics: PartnerSuccessMetric
             <dt className="flex items-center gap-1.5 text-xs text-muted-foreground">
               <CheckCircle2 className="h-3.5 w-3.5" aria-hidden />
               Days to first cert
+              <MetricHelpTrigger helpId="pilot.days_to_first_cert" label="Days to first cert" />
             </dt>
             <dd className="mt-1 font-heading text-2xl font-semibold text-foreground">
               {metrics.daysToFirstCert ?? "—"}
@@ -47,6 +50,7 @@ export function PartnerSuccessPanel({ metrics }: { metrics: PartnerSuccessMetric
             <dt className="flex items-center gap-1.5 text-xs text-muted-foreground">
               <ListChecks className="h-3.5 w-3.5" aria-hidden />
               Avg onboarding
+              <MetricHelpTrigger helpId="pilot.avg_onboarding" label="Avg onboarding" />
             </dt>
             <dd className="mt-1 font-heading text-2xl font-semibold text-foreground">
               {metrics.avgOnboardingPct}%
@@ -57,6 +61,7 @@ export function PartnerSuccessPanel({ metrics }: { metrics: PartnerSuccessMetric
             <dt className="flex items-center gap-1.5 text-xs text-muted-foreground">
               <Target className="h-3.5 w-3.5" aria-hidden />
               Scenario pass rate
+              <MetricHelpTrigger helpId="pilot.scenario_pass_rate" label="Scenario pass rate" />
             </dt>
             <dd className="mt-1 font-heading text-2xl font-semibold text-foreground">
               {metrics.scenarioPassRatePct !== null ? `${metrics.scenarioPassRatePct}%` : "—"}

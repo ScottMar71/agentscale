@@ -15,6 +15,7 @@ import { ExecutiveChartsLive } from "@/components/dashboard/executive-charts-liv
 import { Card, CardContent } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
 import { PartnerSuccessPanel } from "@/components/dashboard/partner-success-panel";
+import { MetricHelpTrigger } from "@/components/help/metric-help-trigger";
 import type { DashboardStats, PartnerSuccessMetrics } from "@/types";
 
 export function ExecutiveDashboardView({
@@ -95,6 +96,7 @@ export function ExecutiveDashboardView({
             value={stats.totalAgents}
             subtitle="Registered agents"
             icon={Bot}
+            helpId="metric.ai_workforce"
           />
           <StatCard
             title="Certified"
@@ -104,18 +106,21 @@ export function ExecutiveDashboardView({
             }
             icon={Award}
             variant="success"
+            helpId="metric.certified"
           />
           <StatCard
             title="Utilisation"
             value={`${stats.utilization}%`}
             subtitle="Active in production"
             icon={Activity}
+            helpId="metric.utilisation"
           />
           <StatCard
             title="Avg Health"
             value={stats.avgHealthScore || "—"}
             subtitle="0–100 score"
             icon={Activity}
+            helpId="metric.avg_health"
           />
           <StatCard
             title="At Risk"
@@ -123,6 +128,7 @@ export function ExecutiveDashboardView({
             subtitle="High/critical risk agents"
             icon={AlertTriangle}
             variant="warning"
+            helpId="metric.at_risk"
           />
           <StatCard
             title="Est. Savings"
@@ -135,6 +141,7 @@ export function ExecutiveDashboardView({
             }
             subtitle={isDemo ? "Annual (modelled)" : "Modelled savings (Sprint 5+)"}
             icon={PoundSterling}
+            helpId="metric.est_savings"
           />
         </div>
 
@@ -148,7 +155,13 @@ export function ExecutiveDashboardView({
                 <p className="font-heading text-2xl font-semibold text-foreground">
                   {stats.expiringCerts}
                 </p>
-                <p className="text-xs text-muted-foreground">Expiring certifications (30d)</p>
+                <p className="flex items-center gap-1 text-xs text-muted-foreground">
+                  Expiring certifications (30d)
+                  <MetricHelpTrigger
+                    helpId="metric.expiring_certs"
+                    label="Expiring certifications (30d)"
+                  />
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -159,7 +172,10 @@ export function ExecutiveDashboardView({
                 <p className="font-heading text-2xl font-semibold text-foreground">
                   {stats.failedAssessments}
                 </p>
-                <p className="text-xs text-muted-foreground">Failed assessments (7d)</p>
+                <p className="flex items-center gap-1 text-xs text-muted-foreground">
+                  Failed assessments (7d)
+                  <MetricHelpTrigger helpId="metric.failed_assessments" label="Failed assessments (7d)" />
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -167,8 +183,10 @@ export function ExecutiveDashboardView({
             <CardContent className="flex items-center gap-3 pt-6">
               <Shield className="h-8 w-8 shrink-0 text-primary" aria-hidden />
               <div>
-                <p className="font-medium text-foreground">
-                  Governance posture:{" "}
+                <p className="flex flex-wrap items-center gap-1 font-medium text-foreground">
+                  <span>Governance posture:</span>
+                  <MetricHelpTrigger helpId="metric.governance_posture" label="Governance posture" />
+                  <span>
                   {isDemo
                     ? "Strong"
                     : stats.totalAgents === 0
@@ -178,6 +196,7 @@ export function ExecutiveDashboardView({
                         : certCoverage >= 50
                           ? "Moderate"
                           : "Needs attention"}
+                  </span>
                 </p>
                 <p className="mt-1 text-xs text-muted-foreground">
                   {isDemo

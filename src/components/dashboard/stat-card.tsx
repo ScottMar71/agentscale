@@ -1,4 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { MetricHelpTrigger } from "@/components/help/metric-help-trigger";
 import { cn } from "@/lib/utils";
 import type { LucideIcon } from "lucide-react";
 
@@ -9,6 +10,7 @@ interface StatCardProps {
   icon?: LucideIcon;
   trend?: { value: string; positive?: boolean };
   variant?: "default" | "warning" | "success";
+  helpId?: string;
 }
 
 const iconStyles: Record<NonNullable<StatCardProps["variant"]>, string> = {
@@ -24,12 +26,14 @@ export function StatCard({
   icon: Icon,
   trend,
   variant = "default",
+  helpId,
 }: StatCardProps) {
   return (
     <Card className="transition-shadow duration-200 hover:shadow-md">
       <CardHeader className="flex flex-row items-center justify-between pb-2">
-        <CardTitle className="text-sm font-medium text-muted-foreground">
+        <CardTitle className="flex items-center gap-1 text-sm font-medium text-muted-foreground">
           {title}
+          {helpId && <MetricHelpTrigger helpId={helpId} label={title} />}
         </CardTitle>
         {Icon && (
           <span

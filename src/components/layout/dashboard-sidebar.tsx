@@ -16,6 +16,7 @@ import {
   Settings,
   Sparkles,
   ShieldEllipsis,
+  CircleHelp,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NAV_ITEMS, type NavIconName } from "@/lib/constants";
@@ -23,6 +24,7 @@ import { Logo } from "@/components/brand/logo";
 import { SignOutNavItem } from "@/components/auth/sign-out-button";
 import { OrgSwitcher } from "@/components/layout/org-switcher";
 import { DataModeIndicator } from "@/components/layout/data-mode-banner";
+import { useHelp } from "@/components/help/help-provider";
 import type { UserOrganization } from "@/lib/auth/session";
 
 const iconMap: Record<NavIconName, typeof LayoutDashboard> = {
@@ -55,6 +57,7 @@ export function SidebarNav({
   isSuperAdmin?: boolean;
 }) {
   const pathname = usePathname();
+  const { openCoach } = useHelp();
 
   return (
     <nav
@@ -143,6 +146,17 @@ export function SidebarNav({
           <Sparkles className="h-4 w-4" aria-hidden />
           Demo dashboard
         </Link>
+        <button
+          type="button"
+          onClick={() => {
+            openCoach();
+            onNavigate?.();
+          }}
+          className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-brand-foreground/70 outline-none transition-colors duration-200 hover:bg-white/5 hover:text-brand-foreground focus-visible:ring-2 focus-visible:ring-brand-accent"
+        >
+          <CircleHelp className="h-4 w-4" aria-hidden />
+          Platform Coach
+        </button>
         <Link
           href="/dashboard/settings"
           onClick={onNavigate}

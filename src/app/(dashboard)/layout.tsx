@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { DashboardSidebar } from "@/components/layout/dashboard-sidebar";
 import { DashboardMobileNav } from "@/components/layout/dashboard-mobile-nav";
 import { DataModeBanner } from "@/components/layout/data-mode-banner";
+import { DashboardHelpShell } from "@/components/help/dashboard-help-shell";
 import { isAuthEnabled } from "@/lib/auth/config";
 import {
   getAuthUser,
@@ -40,28 +41,30 @@ export default async function DashboardLayout({
   const currentOrg = organizations.find((o) => o.id === currentOrgId);
 
   return (
-    <div className="flex h-screen overflow-hidden bg-muted">
-      <DashboardSidebar
-        organizations={organizations}
-        currentOrgId={currentOrgId ?? undefined}
-        authEnabled={authEnabled}
-        organizationName={currentOrg?.name}
-        isSuperAdmin={isSuperAdmin}
-      />
-      <div className="flex flex-1 flex-col overflow-hidden">
-        <DashboardMobileNav
+    <DashboardHelpShell role={currentOrg?.role ?? null}>
+      <div className="flex h-screen overflow-hidden bg-muted">
+        <DashboardSidebar
           organizations={organizations}
           currentOrgId={currentOrgId ?? undefined}
           authEnabled={authEnabled}
           organizationName={currentOrg?.name}
           isSuperAdmin={isSuperAdmin}
         />
-        <DataModeBanner
-          authEnabled={authEnabled}
-          organizationName={currentOrg?.name}
-        />
-        <main className="flex flex-1 flex-col overflow-hidden">{children}</main>
+        <div className="flex flex-1 flex-col overflow-hidden">
+          <DashboardMobileNav
+            organizations={organizations}
+            currentOrgId={currentOrgId ?? undefined}
+            authEnabled={authEnabled}
+            organizationName={currentOrg?.name}
+            isSuperAdmin={isSuperAdmin}
+          />
+          <DataModeBanner
+            authEnabled={authEnabled}
+            organizationName={currentOrg?.name}
+          />
+          <main className="flex flex-1 flex-col overflow-hidden">{children}</main>
+        </div>
       </div>
-    </div>
+    </DashboardHelpShell>
   );
 }
