@@ -39,13 +39,6 @@ export function HelpTopicContent({
         <p className="text-sm text-foreground">{topic.definition}</p>
       )}
 
-      {topic.formula && (
-        <div>
-          <p className="text-xs font-medium text-foreground">Formula</p>
-          <p className="mt-0.5 font-mono text-xs text-muted-foreground">{topic.formula}</p>
-        </div>
-      )}
-
       {topic.dataSource && (
         <p className="text-xs text-muted-foreground">{topic.dataSource}</p>
       )}

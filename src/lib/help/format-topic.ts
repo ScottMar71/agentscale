@@ -8,7 +8,6 @@ export function formatHelpTopicForPrompt(topic: HelpTopic): string {
   ];
 
   if (topic.definition) lines.push(`Definition: ${topic.definition}`);
-  if (topic.formula) lines.push(`Formula: ${topic.formula}`);
   if (topic.dataSource) lines.push(`Data source: ${topic.dataSource}`);
   if (topic.targets) lines.push(`Target: ${topic.targets}`);
   if (topic.appearsOn?.length) lines.push(`Appears on: ${topic.appearsOn.join(", ")}`);

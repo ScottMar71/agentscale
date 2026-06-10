@@ -13,7 +13,6 @@ export interface HelpTopic {
   title: string;
   summary: string;
   definition?: string;
-  formula?: string;
   dataSource?: string;
   appearsOn?: string[];
   targets?: string;

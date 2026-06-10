@@ -47,7 +47,6 @@ function buildMockReply(topics: HelpTopic[], message: string): string {
   const primary = topics[0];
   const parts = [
     `${primary.summary}`,
-    primary.formula ? `Formula: ${primary.formula}` : null,
     primary.targets ? `Target: ${primary.targets}` : null,
     primary.improveSteps?.length
       ? `Next step: ${primary.improveSteps[0].label}.`
